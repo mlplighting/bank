@@ -36,39 +36,29 @@
   .tx-amount{font-weight:700}
   .send-form{padding:12px;background:linear-gradient(180deg,#071827,#06141c);border-radius:12px;margin-top:12px;display:none;flex-direction:column;gap:8px}
   .field{display:flex;flex-direction:column;gap:6px}
-  input,select,textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white);outline:none}
+  input{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white);outline:none}
   .row{display:flex;gap:8px}
   .login-screen{position:fixed;inset:0;background:linear-gradient(180deg, rgba(3,7,12,0.9), rgba(2,6,9,0.95));display:flex;align-items:center;justify-content:center;z-index:999;padding:20px;}
   .login-box{max-width:400px;width:100%;background:var(--card);padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.03)}
-  .center{text-align:center}
-  .note{font-size:12px;color:var(--muted)}
   footer{padding:8px;text-align:center;font-size:12px;color:var(--muted)}
   .top-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
-  .logout-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:8px;font-size:12px;flex:none;cursor:pointer}
-  @media (max-width:420px){
-    .app{height:100vh}
-    .title{font-size:14px}
-  }
+  .logout-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:8px;font-size:12px;cursor:pointer}
+  @media (max-width:420px){.app{height:100vh}.title{font-size:14px}}
   a.fake-link{color:var(--accent);font-size:12px;text-decoration:none;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app" id="app">
   <header>
-    <div class="logo" id="logoWrap">
-      <img id="logoImg" alt="Signature Capital logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJyB2aWV3Qm94PScwIDAgMTYwIDE2MCc+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIHJ4PScyNicgcnk9JzI2JyBmaWxsPScjMGYxNzIwJyBzdHJva2U9JyNkNGFmMzcnIHN0cm9rZS13aWR0aD0nNicvPjx0ZXh0IHg9JzUwJScgeT0nNTAlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjZDRhZjM3JyBmb250LWZhbWlseT0nQnJ1c2ggU2NyaXB0IE1UJyBmb250LXNpemU9JzU0JyBkeT0nLjI1ZW0nPlNDPjwvdGV4dD48L3N2Zz4=">
-    </div>
+    <div class="logo"><img id="logoImg" alt="Signature Capital logo" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><rect width='160' height='160' rx='26' ry='26' fill='%230f1720' stroke='%23d4af37' stroke-width='6'/><text x='50%' y='50%' text-anchor='middle' fill='%23d4af37' font-family='Brush Script MT,Segoe Script,cursive' font-size='54' dy='.25em'>SC</text></svg>"></div>
     <div style="flex:1">
-      <div class="title" id="bankTitle">Signature Capital</div>
-      <div class="small" id="welcomeLine">Welcome, Master Lighting Productions Inc.</div>
+      <div class="title">Signature Capital</div>
+      <div class="small">Welcome, Master Lighting Productions Inc.</div>
     </div>
-    <div class="top-actions">
-      <button id="logoutBtn" class="logout-btn">Logout</button>
-      <input id="logoInput" type="file" accept="image/*" style="display:none">
-    </div>
+    <div class="top-actions"><button id="logoutBtn" class="logout-btn">Logout</button></div>
   </header>
 
-  <div class="balance-card" id="balanceCard">
+  <div class="balance-card">
     <div class="balance-top">
       <div>
         <div class="small">Available balance</div>
@@ -76,9 +66,7 @@
       </div>
       <div class="small" id="acctLine">Acct •••• 4821</div>
     </div>
-    <div class="actions">
-      <button id="sendBtn">Send / Transfer</button>
-    </div>
+    <div class="actions"><button id="sendBtn">Send / Transfer</button></div>
   </div>
 
   <main>
@@ -87,32 +75,14 @@
         <div style="font-weight:700">Wire Transfer</div>
         <div class="small" id="currentBalanceSmall">$12,038,450.72</div>
       </div>
-      <div class="field">
-        <label class="small">Recipient name</label>
-        <input id="recName" placeholder="Full name">
-      </div>
+      <div class="field"><label class="small">Recipient name</label><input id="recName" placeholder="Full name"></div>
       <div class="row">
-        <div class="field" style="flex:1">
-          <label class="small">Routing / ABA</label>
-          <input id="routing" placeholder="9 digits">
-        </div>
-        <div class="field" style="flex:1">
-          <label class="small">Account #</label>
-          <input id="acctNo" placeholder="Account number">
-        </div>
+        <div class="field" style="flex:1"><label class="small">Routing / ABA</label><input id="routing" placeholder="9 digits"></div>
+        <div class="field" style="flex:1"><label class="small">Account #</label><input id="acctNo" placeholder="Account number"></div>
       </div>
-      <div class="field">
-        <label class="small">Bank name</label>
-        <input id="bankName" placeholder="Bank name">
-      </div>
-      <div class="field">
-        <label class="small">Amount (USD)</label>
-        <input id="amount" type="number" placeholder="5000.00" min="0" step="0.01">
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button id="confirmSend">Confirm & Send</button>
-        <button id="cancelSend" class="ghost">Cancel</button>
-      </div>
+      <div class="field"><label class="small">Bank name</label><input id="bankName" placeholder="Bank name"></div>
+      <div class="field"><label class="small">Amount (USD)</label><input id="amount" type="number" placeholder="5000.00" min="0" step="0.01"></div>
+      <div style="display:flex;gap:8px;"><button id="confirmSend">Confirm & Send</button><button id="cancelSend" class="ghost">Cancel</button></div>
       <div id="sendMessage" class="small" style="color:#fca5a5"></div>
     </div>
 
@@ -126,254 +96,63 @@
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  const currency = n => {
-    if (isNaN(n)) return "$0.00";
-    return "$" + Number(n).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-  };
+  const currency = n => "$" + Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  const DEFAULT_BALANCE=12038450.72,TRANSACTION_COUNT=100;
+  const KEY_BAL='sigcap_balance',KEY_TX='sigcap_tx',KEY_AUTH='sigcap_auth';
+  const balanceAmount=$('balanceAmount'),txList=$('txList'),sendBtn=$('sendBtn'),sendForm=$('sendForm'),
+        confirmSend=$('confirmSend'),cancelSend=$('cancelSend'),amountI=$('amount'),
+        recName=$('recName'),routing=$('routing'),acctNo=$('acctNo'),bankName=$('bankName'),
+        currentBalanceSmall=$('currentBalanceSmall'),sendMessage=$('sendMessage'),logoutBtn=$('logoutBtn'),acctLine=$('acctLine');
 
-  const DEFAULT_BALANCE = 12038450.72;
-  const TRANSACTION_COUNT = 100;
-
-  const KEY_BAL = 'sigcap_balance_v2';
-  const KEY_TX = 'sigcap_txs_v2';
-  const KEY_LOGO = 'sigcap_logo_v2';
-  const KEY_AUTH = 'sigcap_auth_v2';
-  const KEY_ACCT = 'sigcap_acct_v2';
-
-  const balanceAmount = $('balanceAmount');
-  const txList = $('txList');
-  const sendBtn = $('sendBtn');
-  const sendForm = $('sendForm');
-  const confirmSend = $('confirmSend');
-  const cancelSend = $('cancelSend');
-  const amountI = $('amount');
-  const recName = $('recName');
-  const routing = $('routing');
-  const acctNo = $('acctNo');
-  const bankName = $('bankName');
-  const currentBalanceSmall = $('currentBalanceSmall');
-  const sendMessage = $('sendMessage');
-  const logoImg = $('logoImg');
-  const logoutBtn = $('logoutBtn');
-  const acctLine = $('acctLine');
-
-  if (!localStorage.getItem(KEY_AUTH)){
-    showLogin();
-  } else {
-    initApp();
-  }
+  if(!localStorage.getItem(KEY_AUTH))showLogin();else init();
 
   function showLogin(){
-    const loginOverlay = document.createElement('div');
-    loginOverlay.className = 'login-screen';
-    loginOverlay.innerHTML = `
-      <div class="login-box">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div class="logo" style="width:44px;height:44px;">
-            <img src="${logoImg.src}" style="max-width:100%;max-height:100%" alt="Signature Capital">
-          </div>
-          <div>
-            <div style="font-weight:700;font-size:16px">Signature Capital</div>
-            <div class="small">Secure Banking Access</div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="small">Username</label>
-          <input id="loginUser" placeholder="username">
-        </div>
-        <div class="field">
-          <label class="small">Password</label>
-          <input id="loginPass" type="password" placeholder="password">
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button id="loginBtn">Login</button>
-        </div>
-        <div style="margin-top:10px">
-          <a class="fake-link" id="forgotBtn">Forgot password?</a>
-        </div>
+    const login=document.createElement('div');
+    login.className='login-screen';
+    login.innerHTML=`<div class="login-box">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="logo" style="width:44px;height:44px;"><img src="${$('logoImg').src}" style="max-width:100%;max-height:100%"></div>
+        <div><div style="font-weight:700;font-size:16px">Signature Capital</div><div class="small">Secure Banking Access</div></div>
       </div>
-    `;
-    document.body.appendChild(loginOverlay);
-    $('loginBtn').addEventListener('click', ()=> {
-      const u = $('loginUser').value.trim();
-      const p = $('loginPass').value.trim();
-      if (!u || !p){
-        alert('Enter username and password');
-        return;
-      }
-      localStorage.setItem(KEY_AUTH, '1');
-      loginOverlay.remove();
-      initApp();
-    });
-    $('loginPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ $('loginBtn').click(); }});
-    $('forgotBtn').addEventListener('click', ()=> alert('This is a demo. Password reset is not enabled.'));
+      <div class="field"><label class="small">Username</label><input id="user"></div>
+      <div class="field"><label class="small">Password</label><input id="pass" type="password"></div>
+      <button id="loginBtn">Login</button>
+      <div style="margin-top:10px"><a class="fake-link">Forgot password?</a></div>
+    </div>`;
+    document.body.appendChild(login);
+    login.querySelector('#loginBtn').onclick=()=>{if(!$('user').value||!$('pass').value)return alert('Enter username and password');localStorage.setItem(KEY_AUTH,'1');login.remove();init();};
   }
 
-  function initApp(){
-    if (!localStorage.getItem(KEY_BAL)){
-      localStorage.setItem(KEY_BAL, String(DEFAULT_BALANCE));
-    }
-    if (!localStorage.getItem(KEY_TX)){
-      const txs = generateTransactions(TRANSACTION_COUNT);
-      localStorage.setItem(KEY_TX, JSON.stringify(txs));
-    }
-    const storedLogo = localStorage.getItem(KEY_LOGO);
-    if (storedLogo){
-      logoImg.src = storedLogo;
-    }
-    if (!localStorage.getItem(KEY_ACCT)){
-      const rand = String(Math.floor(1000 + Math.random()*9000));
-      localStorage.setItem(KEY_ACCT, rand);
-    }
-    const acct = localStorage.getItem(KEY_ACCT);
-    acctLine.textContent = "Acct •••• " + acct;
+  function init(){
+    if(!localStorage.getItem(KEY_BAL))localStorage.setItem(KEY_BAL,DEFAULT_BALANCE);
+    if(!localStorage.getItem(KEY_TX))localStorage.setItem(KEY_TX,JSON.stringify(genTx(TRANSACTION_COUNT)));
+    acctLine.textContent="Acct •••• "+Math.floor(1000+Math.random()*9000);
     render();
   }
 
-  function generateTransactions(n){
-    const topLuxury = [
-      {merchant: "Louis Vuitton 5th Ave", amount: 8750.00},
-      {merchant: "Prada Soho", amount: 6420.45},
-      {merchant: "Gucci Madison", amount: 5875.90},
-      {merchant: "Dior Boutique", amount: 7130.25},
-      {merchant: "Bottega Veneta", amount: 4590.00},
-      {merchant: "Rolex Authorized", amount: 12890.00},
-      {merchant: "Cartier NYC", amount: 9980.15},
-      {merchant: "Fendi Boutique", amount: 5120.75}
-    ];
-    const restaurants = ["Nobu","Carbone","Le Bernardin","The Modern","Cipriani Downtown","Casa Cipriani"];
-    const electronics = ["Apple Store","B&H Photo","Adorama","Samsung Experience"];
-    const misc = ["Uber","Airbnb","Amazon","Grocery Market","Gas Station","Netflix","Equinox"];
-    const txs = [];
-    const now = Date.now();
-
-    topLuxury.forEach((item, idx)=>{
-      txs.push({
-        id: 'lux_'+idx,
-        merchant: item.merchant,
-        amount: item.amount,
-        type: 'debit',
-        iso: new Date(now - idx*60*60*1000).toISOString(),
-        note: 'POS Purchase'
-      });
-    });
-
-    for (let i=topLuxury.length;i<n;i++){
-      const pick = Math.random();
-      let merchant;
-      let amount;
-      if (pick < 0.25){
-        merchant = restaurants[Math.floor(Math.random()*restaurants.length)];
-        amount = randRange(120, 900);
-      } else if (pick < 0.45){
-        merchant = electronics[Math.floor(Math.random()*electronics.length)];
-        amount = randRange(150, 4500);
-      } else {
-        merchant = misc[Math.floor(Math.random()*misc.length)];
-        amount = randRange(15, 450);
-      }
-      const date = new Date(now - (i+1)*3*60*60*1000);
-      txs.push({
-        id: `tx_${i}`,
-        merchant,
-        amount: Number(amount.toFixed(2)),
-        type: 'debit',
-        iso: date.toISOString(),
-        note: ''
-      });
-    }
-    return txs;
-  }
-
-  function randRange(min, max){
-    return Math.random()*(max-min)+min;
+  function genTx(n){
+    const luxury=["Louis Vuitton 5th Ave","Prada Soho","Gucci Madison","Dior Boutique","Cartier NYC","Rolex Boutique","Bottega Veneta","Fendi Boutique"],
+          rest=["Nobu","Carbone","Le Bernardin","Cipriani Downtown","Casa Cipriani"],
+          elec=["Apple Store","B&H Photo","Adorama","Samsung Experience"],
+          misc=["Uber","Airbnb","Amazon","Grocery Market","Netflix","Equinox"];
+    const arr=[];for(let i=0;i<n;i++){let m,amt;if(i<luxury.length){m=luxury[i];amt=4000+Math.random()*10000;}else{const p=Math.random();if(p<.3){m=rest[Math.floor(Math.random()*rest.length)];amt=100+Math.random()*900;}else if(p<.6){m=elec[Math.floor(Math.random()*elec.length)];amt=300+Math.random()*5000;}else{m=misc[Math.floor(Math.random()*misc.length)];amt=20+Math.random()*300;}}arr.push({merchant:m,amount:amt.toFixed(2),iso:new Date(Date.now()-i*36e5).toISOString()});}
+    return arr;
   }
 
   function render(){
-    const bal = Number(localStorage.getItem(KEY_BAL) || DEFAULT_BALANCE);
-    balanceAmount.textContent = currency(bal);
-    currentBalanceSmall.textContent = currency(bal);
-    renderTxs();
+    const bal=+localStorage.getItem(KEY_BAL);balanceAmount.textContent=currency(bal);currentBalanceSmall.textContent=currency(bal);
+    const txs=JSON.parse(localStorage.getItem(KEY_TX)||"[]");
+    txList.innerHTML='';txs.forEach(t=>{const d=new Date(t.iso).toLocaleDateString();txList.innerHTML+=`<div class="tx"><div class="tx-left"><div class="tx-merchant">${t.merchant}</div><div class="tx-details">${d}</div></div><div class="tx-amount" style="color:#ffb4b4">-$${(+t.amount).toLocaleString()}</div></div>`});
   }
 
-  function renderTxs(){
-    const txs = JSON.parse(localStorage.getItem(KEY_TX) || '[]');
-    txList.innerHTML = '';
-    txs.sort((a,b)=> new Date(b.iso) - new Date(a.iso));
-    txs.slice(0,200).forEach(tx=>{
-      const d = new Date(tx.iso);
-      const div = document.createElement('div');
-      div.className = 'tx';
-      div.innerHTML = `
-        <div class="tx-left">
-          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
-          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• '+escapeHtml(tx.note):''}</div>
-        </div>
-        <div class="tx-right">
-          <div class="tx-amount" style="color:#ffb4b4">-${currency(tx.amount).replace('$','')}</div>
-        </div>
-      `;
-      txList.appendChild(div);
-    });
-  }
-
-  sendBtn.addEventListener('click', ()=>{
-    sendForm.style.display = sendForm.style.display === 'flex' ? 'none' : 'flex';
-    sendForm.style.flexDirection = 'column';
-    amountI.value = '';
-    recName.value = '';
-    routing.value = '';
-    acctNo.value = '';
-    bankName.value = '';
-    sendMessage.textContent = '';
-  });
-  cancelSend.addEventListener('click', ()=> sendBtn.click());
-
-  confirmSend.addEventListener('click', ()=>{
-    sendMessage.style.color = '#fca5a5';
-    sendMessage.textContent = '';
-    const amt = Number(amountI.value);
-    if (!recName.value.trim()) { sendMessage.textContent = 'Enter recipient name'; return; }
-    if (!routing.value.trim()) { sendMessage.textContent = 'Enter routing number'; return; }
-    if (!acctNo.value.trim()) { sendMessage.textContent = 'Enter account number'; return; }
-    if (!bankName.value.trim()) { sendMessage.textContent = 'Enter bank name'; return; }
-    if (!amt || isNaN(amt) || amt <= 0) { sendMessage.textContent = 'Enter valid amount'; return; }
-
-    let bal = Number(localStorage.getItem(KEY_BAL) || 0);
-    if (amt > bal) { sendMessage.textContent = 'Insufficient funds'; return; }
-
-    bal = Number((bal - amt).toFixed(2));
-    localStorage.setItem(KEY_BAL, String(bal));
-
-    const txs = JSON.parse(localStorage.getItem(KEY_TX) || '[]');
-    const now = new Date().toISOString();
-    txs.unshift({
-      id: 'wire_' + Date.now(),
-      merchant: `Wire to ${recName.value}`,
-      amount: Number(amt.toFixed(2)),
-      type: 'debit',
-      iso: now,
-      note: `Acct ${acctNo.value} • ${bankName.value}`
-    });
-    localStorage.setItem(KEY_TX, JSON.stringify(txs.slice(0,500)));
-
-    render();
-    sendMessage.style.color = '#9cf7b9';
-    sendMessage.textContent = 'Wire sent. Balance updated.';
-    setTimeout(()=>{ sendForm.style.display='none'; }, 900);
-  });
-
-  logoutBtn.addEventListener('click', ()=>{
-    localStorage.removeItem(KEY_AUTH);
-    showLogin();
-  });
-
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, function(m){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
-    });
-  }
-
+  sendBtn.onclick=()=>sendForm.style.display=sendForm.style.display==='flex'?'none':'flex';
+  cancelSend.onclick=()=>sendForm.style.display='none';
+  confirmSend.onclick=()=>{
+    const amt=+amountI.value;if(!recName.value||!routing.value||!acctNo.value||!bankName.value||!amt)return sendMessage.textContent='Fill all fields';
+    let bal=+localStorage.getItem(KEY_BAL);if(amt>bal)return sendMessage.textContent='Insufficient funds';
+    bal-=amt;localStorage.setItem(KEY_BAL,bal);const txs=JSON.parse(localStorage.getItem(KEY_TX));txs.unshift({merchant:`Wire to ${recName.value}`,amount:amt,iso:new Date().toISOString()});localStorage.setItem(KEY_TX,JSON.stringify(txs));render();sendMessage.style.color='#9cf7b9';sendMessage.textContent='Wire sent';setTimeout(()=>sendForm.style.display='none',1000);
+  };
+  logoutBtn.onclick=()=>{localStorage.removeItem(KEY_AUTH);location.reload();}
 })();
 </script>
 </body>
