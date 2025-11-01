@@ -16,7 +16,7 @@
   }
   html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%, #091827 100%);color:var(--white);}
   .app{max-width:420px;margin:0 auto;height:100vh;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.6);}
-  header{padding:12px;display:flex;align-items:center;gap:12px;background:transparent;}
+  header{padding:12px;display:flex;align-items:center;gap:12px;}
   .logo{width:48px;height:48px;border-radius:10px;background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(212,175,55,0.35);}
   .logo img{max-width:100%;max-height:100%;display:block;}
   .title{font-weight:600;font-size:16px;}
@@ -44,25 +44,25 @@
   .note{font-size:12px;color:var(--muted)}
   footer{padding:8px;text-align:center;font-size:12px;color:var(--muted)}
   .top-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
-  .logout-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:8px;font-size:12px;flex:none}
+  .logout-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:8px;font-size:12px;flex:none;cursor:pointer}
   @media (max-width:420px){
     .app{height:100vh}
     .title{font-size:14px}
   }
+  a.fake-link{color:var(--accent);font-size:12px;text-decoration:none;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app" id="app">
   <header>
     <div class="logo" id="logoWrap">
-      <img id="logoImg" alt="Signature Capital logo" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><rect width='160' height='160' rx='26' ry='26' fill='%230f1720' stroke='%23d4af37' stroke-width='6'/><text x='50%' y='50%' text-anchor='middle' fill='%23d4af37' font-family='Arial' font-size='44' dy='.3em'>SC</text></svg>">
+      <img id="logoImg" alt="Signature Capital logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJyB2aWV3Qm94PScwIDAgMTYwIDE2MCc+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIHJ4PScyNicgcnk9JzI2JyBmaWxsPScjMGYxNzIwJyBzdHJva2U9JyNkNGFmMzcnIHN0cm9rZS13aWR0aD0nNicvPjx0ZXh0IHg9JzUwJScgeT0nNTAlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjZDRhZjM3JyBmb250LWZhbWlseT0nQnJ1c2ggU2NyaXB0IE1UJyBmb250LXNpemU9JzU0JyBkeT0nLjI1ZW0nPlNDPjwvdGV4dD48L3N2Zz4=">
     </div>
     <div style="flex:1">
       <div class="title" id="bankTitle">Signature Capital</div>
-      <div class="small" id="userEmail">Master Lighting Productions Inc.</div>
+      <div class="small" id="welcomeLine">Welcome, Master Lighting Productions Inc.</div>
     </div>
     <div class="top-actions">
-      <button id="uploadBtn" class="ghost" style="padding:6px 8px;font-size:12px">Change logo</button>
       <button id="logoutBtn" class="logout-btn">Logout</button>
       <input id="logoInput" type="file" accept="image/*" style="display:none">
     </div>
@@ -74,12 +74,10 @@
         <div class="small">Available balance</div>
         <div class="balance-amount" id="balanceAmount">$12,038,450.72</div>
       </div>
-      <div class="small">Acct •••• 1234</div>
+      <div class="small" id="acctLine">Acct •••• 4821</div>
     </div>
-    <div class="small" style="margin-top:4px">Master Lighting Productions Inc.</div>
     <div class="actions">
       <button id="sendBtn">Send / Transfer</button>
-      <button id="refreshBtn" class="ghost">Refresh</button>
     </div>
   </div>
 
@@ -136,10 +134,11 @@
   const DEFAULT_BALANCE = 12038450.72;
   const TRANSACTION_COUNT = 100;
 
-  const KEY_BAL = 'sigcap_balance_v1';
-  const KEY_TX = 'sigcap_txs_v1';
-  const KEY_LOGO = 'sigcap_logo_v1';
-  const KEY_AUTH = 'sigcap_auth_v1';
+  const KEY_BAL = 'sigcap_balance_v2';
+  const KEY_TX = 'sigcap_txs_v2';
+  const KEY_LOGO = 'sigcap_logo_v2';
+  const KEY_AUTH = 'sigcap_auth_v2';
+  const KEY_ACCT = 'sigcap_acct_v2';
 
   const balanceAmount = $('balanceAmount');
   const txList = $('txList');
@@ -154,13 +153,10 @@
   const bankName = $('bankName');
   const currentBalanceSmall = $('currentBalanceSmall');
   const sendMessage = $('sendMessage');
-  const uploadBtn = $('uploadBtn');
-  const logoInput = $('logoInput');
   const logoImg = $('logoImg');
-  const refreshBtn = $('refreshBtn');
   const logoutBtn = $('logoutBtn');
+  const acctLine = $('acctLine');
 
-  // LOGIN
   if (!localStorage.getItem(KEY_AUTH)){
     showLogin();
   } else {
@@ -173,29 +169,44 @@
     loginOverlay.innerHTML = `
       <div class="login-box">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div class="logo" style="width:40px;height:40px;">
+          <div class="logo" style="width:44px;height:44px;">
             <img src="${logoImg.src}" style="max-width:100%;max-height:100%" alt="Signature Capital">
           </div>
           <div>
             <div style="font-weight:700;font-size:16px">Signature Capital</div>
-            <div class="small">Secure Client Access</div>
+            <div class="small">Secure Banking Access</div>
           </div>
         </div>
-        <div class="small">Enter any password to open the demo.</div>
-        <div style="margin-top:12px">
-          <input id="demoPass" placeholder="Password" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff">
+        <div class="field">
+          <label class="small">Username</label>
+          <input id="loginUser" placeholder="username">
+        </div>
+        <div class="field">
+          <label class="small">Password</label>
+          <input id="loginPass" type="password" placeholder="password">
         </div>
         <div style="display:flex;gap:8px;margin-top:12px">
           <button id="loginBtn">Login</button>
-          <button id="guestBtn" class="ghost">Guest</button>
         </div>
-        <div style="margin-top:10px" class="note">Master Lighting Productions Inc.</div>
+        <div style="margin-top:10px">
+          <a class="fake-link" id="forgotBtn">Forgot password?</a>
+        </div>
       </div>
     `;
     document.body.appendChild(loginOverlay);
-    $('loginBtn').addEventListener('click',()=>{ localStorage.setItem(KEY_AUTH, '1'); loginOverlay.remove(); initApp(); });
-    $('guestBtn').addEventListener('click',()=>{ localStorage.setItem(KEY_AUTH, '1'); loginOverlay.remove(); initApp(); });
-    $('demoPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ $('loginBtn').click(); }});
+    $('loginBtn').addEventListener('click', ()=> {
+      const u = $('loginUser').value.trim();
+      const p = $('loginPass').value.trim();
+      if (!u || !p){
+        alert('Enter username and password');
+        return;
+      }
+      localStorage.setItem(KEY_AUTH, '1');
+      loginOverlay.remove();
+      initApp();
+    });
+    $('loginPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ $('loginBtn').click(); }});
+    $('forgotBtn').addEventListener('click', ()=> alert('This is a demo. Password reset is not enabled.'));
   }
 
   function initApp(){
@@ -210,11 +221,16 @@
     if (storedLogo){
       logoImg.src = storedLogo;
     }
+    if (!localStorage.getItem(KEY_ACCT)){
+      const rand = String(Math.floor(1000 + Math.random()*9000));
+      localStorage.setItem(KEY_ACCT, rand);
+    }
+    const acct = localStorage.getItem(KEY_ACCT);
+    acctLine.textContent = "Acct •••• " + acct;
     render();
   }
 
   function generateTransactions(n){
-    // put luxury first
     const topLuxury = [
       {merchant: "Louis Vuitton 5th Ave", amount: 8750.00},
       {merchant: "Prada Soho", amount: 6420.45},
@@ -231,7 +247,6 @@
     const txs = [];
     const now = Date.now();
 
-    // push luxury first (newest)
     topLuxury.forEach((item, idx)=>{
       txs.push({
         id: 'lux_'+idx,
@@ -243,7 +258,6 @@
       });
     });
 
-    // fill the rest
     for (let i=topLuxury.length;i<n;i++){
       const pick = Math.random();
       let merchant;
@@ -303,7 +317,6 @@
     });
   }
 
-  // send
   sendBtn.addEventListener('click', ()=>{
     sendForm.style.display = sendForm.style.display === 'flex' ? 'none' : 'flex';
     sendForm.style.flexDirection = 'column';
@@ -350,30 +363,16 @@
     setTimeout(()=>{ sendForm.style.display='none'; }, 900);
   });
 
-  // upload logo
-  uploadBtn.addEventListener('click', ()=> logoInput.click());
-  logoInput.addEventListener('change', (e)=>{
-    const f = e.target.files && e.target.files[0];
-    if (!f) return;
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      localStorage.setItem(KEY_LOGO, ev.target.result);
-      logoImg.src = ev.target.result;
-    };
-    reader.readAsDataURL(f);
-  });
-
-  // refresh transactions
-  refreshBtn.addEventListener('click', renderTxs);
-
-  // logout
   logoutBtn.addEventListener('click', ()=>{
     localStorage.removeItem(KEY_AUTH);
-    // do not delete balance or txs, just force login
     showLogin();
   });
 
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];}); }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+    });
+  }
 
 })();
 </script>
