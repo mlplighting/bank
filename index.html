@@ -30,95 +30,102 @@
     box-shadow:0 0 40px rgba(0,0,0,.6);
   }
   header{
-    padding:12px;
-    display:flex;
-    align-items:center;
-    gap:12px;
+    padding:12px 12px 4px;
   }
-  .logo{
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    background:rgba(255,255,255,.02);
+  .app-title{
+    font-size:18px;
+    font-weight:700;
+  }
+  .app-sub{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .top-actions{
     display:flex;
+    gap:8px;
+    margin-top:10px;
+  }
+  .top-btn{
+    flex:1;
+    background:rgba(14,165,164,0.08);
+    border:1px solid rgba(14,165,164,0.25);
+    border-radius:10px;
+    padding:8px 6px 9px;
+    font-size:12px;
+    color:var(--white);
+    cursor:pointer;
+    display:flex;
+    gap:6px;
     align-items:center;
     justify-content:center;
-    overflow:hidden;
-    border:1px solid rgba(212,175,55,0.28);
   }
-  .logo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
+  .top-btn small{
+    font-size:10px;
+    color:rgba(255,255,255,0.35);
   }
-  .title{font-weight:600;font-size:16px}
-  /* ACCOUNTS CARD */
-  .accounts-card{
-    background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-    margin:12px;
-    border-radius:12px;
-    padding:14px;
+
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:14px 12px 4px;
+  }
+  .section-title{
+    font-weight:700;
+    font-size:14px;
+  }
+  .section-total{
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .account-list,
+  .card-list{
+    margin:0 12px;
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:8px;
   }
-  .acc-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .acc-name{font-size:13px;font-weight:600}
-  .acc-amt{font-size:16px;font-weight:700;color:var(--gold)}
-  .acc-total{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-top:1px solid rgba(255,255,255,0.04);
-    padding-top:8px;
-  }
-  .acc-total-title{font-size:12px;color:var(--muted)}
-  .acc-total-amt{font-size:18px;font-weight:700;color:#fff}
-  .actions{display:flex;gap:8px;margin-top:4px}
-  button{
-    background:var(--accent);
-    border:none;
-    padding:10px 12px;
+  .list-item{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.017);
     border-radius:10px;
-    color:white;
-    font-weight:600;
-    flex:1;
-    font-size:14px;
+    padding:10px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     cursor:pointer;
   }
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-  /* CREDIT CARD */
-  .cc-card{
-    background:linear-gradient(180deg,#0b1220,#071021);
-    margin:0 12px 12px;
-    border-radius:12px;
-    padding:14px;
-  }
-  .cc-top{
+  .item-left{
     display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:12px;
+    flex-direction:column;
+    gap:3px;
   }
-  .cc-balance{font-size:19px;font-weight:700;color:#fca5a5}
-  main{flex:1;overflow:auto;padding:12px}
-  .section-title{margin-top:4px;font-weight:700}
-  .transactions{display:flex;flex-direction:column;gap:8px;padding-bottom:24px}
-  .tx{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
-  .tx-left{display:flex;flex-direction:column;gap:6px}
-  .tx-merchant{font-weight:700}
-  .tx-details{font-size:12px;color:var(--muted)}
-  .tx-amount{font-weight:700}
+  .item-name{
+    font-size:13px;
+    font-weight:600;
+  }
+  .item-sub{
+    font-size:11px;
+    color:var(--muted);
+  }
+  .item-amt{
+    font-size:14px;
+    font-weight:700;
+    color:var(--gold);
+  }
+
+  main{
+    flex:1;
+    overflow:auto;
+  }
+
   .send-form{
     padding:12px;
     background:linear-gradient(180deg,#071827,#06141c);
     border-radius:12px;
-    margin-top:12px;
+    margin:12px;
     display:none;
     flex-direction:column;
     gap:8px;
@@ -133,6 +140,42 @@
     outline:none;
   }
   .row{display:flex;gap:8px}
+  button.primary{
+    background:var(--accent);
+    border:none;
+    padding:10px 12px;
+    border-radius:10px;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+  }
+  button.ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.08);
+    padding:10px 12px;
+    border-radius:10px;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+  }
+  footer{
+    padding:8px;
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .logout-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
+  }
+
   .login-screen{
     position:fixed;
     inset:0;
@@ -146,167 +189,247 @@
   .login-box{
     max-width:420px;
     width:100%;
-    background:var(--card);
+    background:rgba(11,18,32,1);
     padding:22px;
     border-radius:16px;
     border:1px solid rgba(255,255,255,0.03);
   }
-  footer{padding:8px;text-align:center;font-size:12px;color:var(--muted)}
-  .logout-btn{
+
+  /* detail screens */
+  .screen{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+  }
+  .screen-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-bottom:1px solid rgba(255,255,255,0.03);
+  }
+  .back-btn{
     background:transparent;
-    border:1px solid rgba(255,255,255,0.15);
-    padding:6px 10px;
-    border-radius:8px;
-    font-size:12px;
+    border:1px solid rgba(255,255,255,0.1);
+    width:30px;
+    height:30px;
+    border-radius:999px;
+    color:#fff;
     cursor:pointer;
   }
+  .screen-title{
+    font-weight:700;
+  }
+  .detail-body{
+    flex:1;
+    overflow:auto;
+    padding:12px;
+  }
+  .transactions{display:flex;flex-direction:column;gap:8px}
+  .tx{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
+  .tx-left{display:flex;flex-direction:column;gap:6px}
+  .tx-merchant{font-weight:700}
+  .tx-details{font-size:12px;color:var(--muted)}
+  .tx-amount{font-weight:700}
+
+  .cc-head-block{
+    background:linear-gradient(98deg,rgba(252,165,165,0.05),rgba(12,20,35,0.2));
+    border:1px solid rgba(252,165,165,0.1);
+    border-radius:10px;
+    padding:12px 12px 10px;
+    margin-bottom:10px;
+  }
+
   @media (max-width:420px){
     .app{height:100vh}
-    .title{font-size:14px}
   }
-  a.fake-link{color:var(--accent);font-size:12px;text-decoration:none;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-  <header>
-    <div class="logo">
-      <img id="logoImg" alt="Signature Capital logo" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><rect width='160' height='160' rx='26' fill='%230f1720' stroke='%23d4af37' stroke-width='6'/><text x='50%' y='50%' text-anchor='middle' fill='%23d4af37' font-family='Segoe Script,Brush Script MT,cursive' font-size='46' dy='.25em'>Sig</text></svg>">
-    </div>
-    <div style="flex:1">
-      <div class="title">Signature Capital</div>
-      <div class="small" id="welcomeLine">Welcome, Master Lighting Productions</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
-      <button id="logoutBtn" class="logout-btn">Logout</button>
-    </div>
-  </header>
 
-  <!-- ACCOUNTS BLOCK -->
-  <div class="accounts-card" id="accountsCard">
-    <div class="acc-row">
-      <div class="acc-name">Master Lighting Productions</div>
-      <div class="acc-amt" id="balBusiness">$0.00</div>
-    </div>
-    <div class="acc-row">
-      <div class="acc-name">Menachem Boaron</div>
-      <div class="acc-amt" id="balPersonal">$0.00</div>
-    </div>
-    <div class="acc-total">
-      <div class="acc-total-title">Total cash</div>
-      <div class="acc-total-amt" id="balTotal">$0.00</div>
-    </div>
-    <div class="actions">
-      <button id="sendBtn">Send / Transfer</button>
-    </div>
+  <!-- MAIN SCREEN -->
+  <div id="mainScreen" class="screen">
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <header>
+      <div class="app-title">Signature Capital</div>
+      <div class="app-sub" id="welcomeLine">Welcome, Master Lighting Productions</div>
+      <div class="top-actions">
+        <button class="top-btn" id="depositBtn">📷 Deposit</button>
+        <button class="top-btn" id="transferBtn">Transfer</button>
+        <button class="top-btn" id="payCardBtn">Pay card</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- SEND FORM (global) -->
+      <div class="send-form" id="sendForm">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Wire / Transfer</div>
+          <div class="app-sub" id="currentBalanceSmall">$0.00</div>
+        </div>
+
+        <div class="field">
+          <label class="app-sub">From account</label>
+          <select id="fromAccount">
+            <option value="business">Master Lighting Productions Inc.</option>
+            <option value="personal">Menachem Boaron</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="app-sub">Recipient name</label>
+          <input id="recName" type="text" placeholder="Full name">
+        </div>
+
+        <div class="row">
+          <div class="field" style="flex:1">
+            <label class="app-sub">Routing / ABA</label>
+            <input id="routing" type="text" placeholder="9 digits">
+          </div>
+          <div class="field" style="flex:1">
+            <label class="app-sub">Account #</label>
+            <input id="acctNo" type="text" placeholder="Account number">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="app-sub">Bank name</label>
+          <input id="bankName" type="text" placeholder="Bank name">
+        </div>
+
+        <div class="field">
+          <label class="app-sub">Amount (USD)</label>
+          <input id="amount" type="number" placeholder="5000.00" min="0" step="0.01">
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button id="confirmSend" class="primary">Confirm & Send</button>
+          <button id="cancelSend" class="ghost">Cancel</button>
+        </div>
+
+        <div id="sendMessage" class="app-sub" style="color:#fca5a5"></div>
+      </div>
+
+      <!-- BANKING SECTION -->
+      <div class="section-head">
+        <div class="section-title">Banking</div>
+        <div class="section-total" id="bankTotal">$0.00</div>
+      </div>
+      <div class="account-list">
+        <div class="list-item" id="acctBusinessRow">
+          <div class="item-left">
+            <div class="item-name">Master Lighting Productions Inc.</div>
+            <div class="item-sub">x•••4821</div>
+          </div>
+          <div class="item-amt" id="balBusiness">$0.00</div>
+        </div>
+        <div class="list-item" id="acctPersonalRow">
+          <div class="item-left">
+            <div class="item-name">Menachem Boaron</div>
+            <div class="item-sub">x•••9374</div>
+          </div>
+          <div class="item-amt" id="balPersonal">$0.00</div>
+        </div>
+      </div>
+
+      <!-- CREDIT CARDS SECTION -->
+      <div class="section-head">
+        <div class="section-title">Credit cards</div>
+        <div class="section-total" id="ccTotalOwed">$0.00</div>
+      </div>
+      <div class="card-list">
+        <div class="list-item" id="cardBusinessRow">
+          <div class="item-left">
+            <div class="item-name">Business Solutions Credit Card</div>
+            <div class="item-sub">x•••7712</div>
+          </div>
+          <div class="item-amt" id="ccOwedInline">$0.00</div>
+        </div>
+      </div>
+    </main>
+
+    <footer>Signature Capital</footer>
   </div>
 
-  <!-- CREDIT CARD BLOCK -->
-  <div class="cc-card">
-    <div class="cc-top">
+  <!-- ACCOUNT DETAIL SCREEN -->
+  <div id="accountScreen" class="screen" style="display:none">
+    <div class="screen-header">
+      <button class="back-btn" id="backFromAccount">&lt;</button>
       <div>
-        <div class="small">Credit card</div>
-        <div class="cc-balance" id="ccOwed">$0.00</div>
+        <div class="screen-title" id="accDetailName">Account</div>
+        <div class="app-sub" id="accDetailMask">x•••</div>
       </div>
-      <div style="text-align:right">
-        <div class="small" id="ccLimit">Limit $0.00</div>
-        <div class="small">Available <span id="ccAvail">$0.00</span></div>
+      <div style="margin-left:auto">
+        <button class="primary" id="accDetailTransferBtn">Transfer</button>
       </div>
+    </div>
+    <div class="detail-body">
+      <div class="app-sub" style="margin-bottom:4px">Balance</div>
+      <div class="app-title" id="accDetailBalance">$0.00</div>
+      <div class="section-title" style="margin-top:16px;margin-bottom:4px">Transactions</div>
+      <div id="accDetailTx" class="transactions"></div>
     </div>
   </div>
 
-  <main>
-    <!-- SEND FORM -->
-    <div class="send-form" id="sendForm" role="region" aria-label="Wire transfer form">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-weight:700">Wire Transfer</div>
-        <div class="small" id="currentBalanceSmall">$0.00</div>
+  <!-- CARD DETAIL SCREEN -->
+  <div id="cardScreen" class="screen" style="display:none">
+    <div class="screen-header">
+      <button class="back-btn" id="backFromCard">&lt;</button>
+      <div>
+        <div class="screen-title">Business Solutions Credit Card</div>
+        <div class="app-sub">x•••7712</div>
       </div>
-
-      <div class="field">
-        <label class="small">From account</label>
-        <select id="fromAccount">
-          <option value="business">Master Lighting Productions</option>
-          <option value="personal">Menachem Boaron</option>
-        </select>
+      <div style="margin-left:auto">
+        <button class="primary" id="cardPayBtn">Pay card</button>
       </div>
-
-      <div class="field">
-        <label class="small">Recipient name</label>
-        <input id="recName" type="text" placeholder="Full name">
-      </div>
-
-      <div class="row">
-        <div class="field" style="flex:1">
-          <label class="small">Routing / ABA</label>
-          <input id="routing" type="text" placeholder="9 digits">
-        </div>
-        <div class="field" style="flex:1">
-          <label class="small">Account #</label>
-          <input id="acctNo" type="text" placeholder="Account number">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="small">Bank name</label>
-        <input id="bankName" type="text" placeholder="Bank name">
-      </div>
-
-      <div class="field">
-        <label class="small">Amount (USD)</label>
-        <input id="amount" type="number" placeholder="5000.00" min="0" step="0.01">
-      </div>
-
-      <div style="display:flex;gap:8px;">
-        <button id="confirmSend">Confirm & Send</button>
-        <button id="cancelSend" class="ghost">Cancel</button>
-      </div>
-
-      <div id="sendMessage" class="small" style="color:#fca5a5"></div>
     </div>
+    <div class="detail-body">
+      <div class="cc-head-block">
+        <div class="app-sub">Current balance</div>
+        <div class="app-title" id="ccOwed">$0.00</div>
+        <div class="app-sub">Limit <span id="ccLimit">$0.00</span></div>
+        <div class="app-sub">Available <span id="ccAvail">$0.00</span></div>
+      </div>
+      <div class="section-title" style="margin-bottom:4px">Transactions</div>
+      <div id="txListCC" class="transactions"></div>
+    </div>
+  </div>
 
-    <!-- ACCOUNT TX -->
-    <div class="section-title" style="margin-top:8px">Account transactions</div>
-    <div class="transactions" id="txList" aria-live="polite"></div>
-
-    <!-- CC TX -->
-    <div class="section-title" style="margin-top:16px">Credit card transactions</div>
-    <div class="transactions" id="txListCC" aria-live="polite"></div>
-  </main>
-
-  <footer>Signature Capital</footer>
 </div>
 
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  const formatCurrency = n => {
-    if (isNaN(n)) return "$0.00";
-    return "$" + Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-  };
+  const formatCurrency = n => isNaN(n) ? "$0.00" : "$" + Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
 
-  // defaults
   const DEFAULT_ACCOUNTS = {
-    business: 12038450.72,     // Master Lighting Productions
-    personal: 2345980.34       // Menachem Boaron (2.3M and change)
+    business: 12038450.72,
+    personal: 2345980.34
   };
   const DEFAULT_CC = {
     owed: 49872.11,
     limit: 250000
   };
-
   const KEY = {
-    AUTH: 'sigcap_demo_auth_v5',
-    ACCOUNTS: 'sigcap_demo_accounts_v5',
-    CC: 'sigcap_demo_cc_v5',
-    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v5',
-    TX_CC: 'sigcap_demo_tx_cc_v5'
+    AUTH: 'sigcap_demo_auth_v6',
+    ACCOUNTS: 'sigcap_demo_accounts_v6',
+    CC: 'sigcap_demo_cc_v6',
+    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v6',
+    TX_CC: 'sigcap_demo_tx_cc_v6'
   };
 
-  const sendBtn = $('sendBtn');
+  const mainScreen = $('mainScreen');
+  const accountScreen = $('accountScreen');
+  const cardScreen = $('cardScreen');
+
+  const balBusiness = $('balBusiness');
+  const balPersonal = $('balPersonal');
+  const bankTotal = $('bankTotal');
+  const ccTotalOwed = $('ccTotalOwed');
+  const ccOwedInline = $('ccOwedInline');
+
   const sendForm = $('sendForm');
-  const confirmSend = $('confirmSend');
-  const cancelSend = $('cancelSend');
   const fromAccount = $('fromAccount');
   const amountI = $('amount');
   const recName = $('recName');
@@ -316,20 +439,31 @@
   const sendMessage = $('sendMessage');
   const currentBalanceSmall = $('currentBalanceSmall');
 
-  const balBusiness = $('balBusiness');
-  const balPersonal = $('balPersonal');
-  const balTotal = $('balTotal');
+  const txListCC = $('txListCC');
+
+  const accDetailName = $('accDetailName');
+  const accDetailMask = $('accDetailMask');
+  const accDetailBalance = $('accDetailBalance');
+  const accDetailTx = $('accDetailTx');
 
   const ccOwed = $('ccOwed');
   const ccLimit = $('ccLimit');
   const ccAvail = $('ccAvail');
 
-  const txList = $('txList');
-  const txListCC = $('txListCC');
+  const transferBtn = $('transferBtn');
+  const depositBtn = $('depositBtn');
+  const payCardBtn = $('payCardBtn');
+  const confirmSend = $('confirmSend');
+  const cancelSend = $('cancelSend');
 
   const logoutBtn = $('logoutBtn');
+  const backFromAccount = $('backFromAccount');
+  const backFromCard = $('backFromCard');
+  const accDetailTransferBtn = $('accDetailTransferBtn');
+  const cardPayBtn = $('cardPayBtn');
 
-  // init
+  let currentDetailAccount = null;
+
   if (!localStorage.getItem(KEY.AUTH)) {
     showLogin();
   } else {
@@ -340,30 +474,20 @@
     const overlay = document.createElement('div');
     overlay.className = 'login-screen';
     overlay.innerHTML = `
-      <div class="login-box" role="dialog" aria-modal="true" aria-label="Signature Capital login">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div class="logo" style="width:48px;height:48px">
-            <img src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><rect width='160' height='160' rx='26' fill='%230f1720' stroke='%23d4af37' stroke-width='6'/><text x='50%' y='50%' text-anchor='middle' fill='%23d4af37' font-family='Segoe Script,Brush Script MT,cursive' font-size='46' dy='.25em'>Sig</text></svg>" style="width:100%;height:100%;object-fit:contain" alt="logo">
-          </div>
-          <div>
-            <div style="font-weight:700;font-size:16px">Signature Capital</div>
-            <div class="small">Secure Banking Access</div>
-          </div>
-        </div>
-
+      <div class="login-box">
+        <div style="font-weight:700;font-size:16px;margin-bottom:4px">Signature Capital</div>
+        <div class="app-sub" style="margin-bottom:14px">Secure Banking Access</div>
         <div class="field">
-          <label class="small">Username</label>
+          <label class="app-sub">Username</label>
           <input id="loginUser" type="text" placeholder="username">
         </div>
         <div class="field">
-          <label class="small">Password</label>
+          <label class="app-sub">Password</label>
           <input id="loginPass" type="password" placeholder="password">
         </div>
-
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button id="loginBtn">Login</button>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button id="loginBtn" class="primary" style="width:100%">Login</button>
         </div>
-
         <div style="margin-top:10px">
           <a class="fake-link" id="forgotBtn">Forgot password?</a>
         </div>
@@ -371,10 +495,10 @@
     `;
     document.body.appendChild(overlay);
 
-    overlay.querySelector('#loginBtn').addEventListener('click', () => {
+    overlay.querySelector('#loginBtn').addEventListener('click', ()=>{
       const u = overlay.querySelector('#loginUser').value.trim();
       const p = overlay.querySelector('#loginPass').value.trim();
-      if (!u || !p) { alert('Enter username and password'); return; }
+      if (!u || !p){ alert('Enter username and password'); return; }
       localStorage.setItem(KEY.AUTH,'1');
       overlay.remove();
       init();
@@ -382,7 +506,7 @@
     overlay.querySelector('#loginPass').addEventListener('keydown', e=>{
       if (e.key === 'Enter') overlay.querySelector('#loginBtn').click();
     });
-    overlay.querySelector('#forgotBtn').addEventListener('click', ()=> alert('Demo: password reset not enabled.'));
+    overlay.querySelector('#forgotBtn').addEventListener('click', ()=> alert('Demo only.'));
   }
 
   function init(){
@@ -400,148 +524,181 @@
     }
 
     bindUI();
-    renderAll();
+    renderMain();
   }
 
   function bindUI(){
-    sendBtn.addEventListener('click', ()=>{
-      sendForm.style.display = (sendForm.style.display === 'flex') ? 'none' : 'flex';
-      sendForm.style.flexDirection = 'column';
-      sendMessage.textContent = '';
-      amountI.value = recName.value = routing.value = acctNo.value = bankName.value = '';
-      updateCurrentBalanceSmall();
+    $('acctBusinessRow').addEventListener('click', ()=> openAccountDetail('business'));
+    $('acctPersonalRow').addEventListener('click', ()=> openAccountDetail('personal'));
+    $('cardBusinessRow').addEventListener('click', ()=> openCardDetail());
+
+    transferBtn.addEventListener('click', toggleSendForm);
+    payCardBtn.addEventListener('click', ()=> {
+      toggleSendForm();
+      fromAccount.value = 'business';
+      sendMessage.textContent = 'Tip: pay the credit card by sending to card.';
+      sendMessage.style.color = '#fca5a5';
     });
+    depositBtn.addEventListener('click', ()=> alert('Demo: mobile check deposit not enabled.'));
 
     fromAccount.addEventListener('change', updateCurrentBalanceSmall);
+    cancelSend.addEventListener('click', ()=> sendForm.style.display = 'none');
 
-    cancelSend.addEventListener('click', ()=> {
-      sendForm.style.display = 'none';
-    });
-
-    confirmSend.addEventListener('click', ()=> {
-      sendMessage.style.color = '#fca5a5';
-      sendMessage.textContent = '';
-
-      const amt = Number(amountI.value);
-      if (!recName.value.trim()) {
-        return sendMessage.textContent = 'Enter recipient name';
-      }
-      if (!amt || isNaN(amt) || amt <= 0) {
-        return sendMessage.textContent = 'Enter valid amount';
-      }
-
-      const accounts = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
-      const from = fromAccount.value; // 'business' or 'personal'
-      const current = Number(accounts[from] || 0);
-
-      if (amt > current) {
-        return sendMessage.textContent = 'Insufficient funds';
-      }
-
-      // subtract and save
-      accounts[from] = Number((current - amt).toFixed(2));
-      localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accounts));
-
-      // add transaction to account tx list
-      const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
-      accTxs.unshift({
-        id: 'wire_' + Date.now(),
-        account: from,
-        merchant: `Wire to ${recName.value}`,
-        amount: amt,
-        iso: new Date().toISOString(),
-        note: `Acct ${acctNo.value || 'n/a'} • ${bankName.value || 'Bank'}`
-      });
-      localStorage.setItem(KEY.TX_ACCOUNTS, JSON.stringify(accTxs.slice(0,500)));
-
-      renderAll();
-      sendMessage.style.color = '#9cf7b9';
-      sendMessage.textContent = 'Wire sent (demo).';
-      setTimeout(()=> sendForm.style.display = 'none', 900);
-    });
+    confirmSend.addEventListener('click', handleSend);
 
     logoutBtn.addEventListener('click', ()=>{
       localStorage.removeItem(KEY.AUTH);
       location.reload();
     });
+
+    backFromAccount.addEventListener('click', ()=> {
+      accountScreen.style.display = 'none';
+      mainScreen.style.display = 'flex';
+    });
+    backFromCard.addEventListener('click', ()=> {
+      cardScreen.style.display = 'none';
+      mainScreen.style.display = 'flex';
+    });
+
+    accDetailTransferBtn.addEventListener('click', ()=>{
+      mainScreen.style.display = 'flex';
+      accountScreen.style.display = 'none';
+      fromAccount.value = currentDetailAccount || 'business';
+      toggleSendForm(true);
+    });
+
+    cardPayBtn.addEventListener('click', ()=>{
+      cardScreen.style.display = 'none';
+      mainScreen.style.display = 'flex';
+      fromAccount.value = 'business';
+      toggleSendForm(true);
+      sendMessage.textContent = 'Paying card from business account (demo).';
+      sendMessage.style.color = '#fca5a5';
+    });
   }
 
-  function renderAll(){
-    renderAccounts();
-    renderCreditCard();
-    renderAccountTxs();
-    renderCCTxs();
-  }
-
-  function renderAccounts(){
-    const accounts = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
-    const business = Number(accounts.business || 0);
-    const personal = Number(accounts.personal || 0);
-    const total = business + personal;
-
-    balBusiness.textContent = formatCurrency(business);
-    balPersonal.textContent = formatCurrency(personal);
-    balTotal.textContent = formatCurrency(total);
-
+  function toggleSendForm(forceOpen){
+    if (forceOpen){
+      sendForm.style.display = 'flex';
+      updateCurrentBalanceSmall();
+      return;
+    }
+    sendForm.style.display = sendForm.style.display === 'flex' ? 'none' : 'flex';
     updateCurrentBalanceSmall();
-  }
-
-  function renderCreditCard(){
-    const cc = JSON.parse(localStorage.getItem(KEY.CC) || '{}');
-    const owed = Number(cc.owed || 0);
-    const limit = Number(cc.limit || 0);
-    const available = limit - owed;
-
-    ccOwed.textContent = formatCurrency(owed);
-    ccLimit.textContent = "Limit " + formatCurrency(limit);
-    ccAvail.textContent = formatCurrency(available);
-  }
-
-  function renderAccountTxs(){
-    const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
-    txList.innerHTML = '';
-    accTxs.slice(0,200).forEach(tx=>{
-      const d = new Date(tx.iso);
-      const node = document.createElement('div');
-      node.className = 'tx';
-      node.innerHTML = `
-        <div class="tx-left">
-          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
-          <div class="tx-details">${d.toLocaleDateString()} • ${tx.account === 'business' ? 'Master Lighting Productions' : 'Menachem Boaron'}${tx.note ? ' • ' + escapeHtml(tx.note) : ''}</div>
-        </div>
-        <div style="text-align:right">
-          <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
-        </div>
-      `;
-      txList.appendChild(node);
-    });
-  }
-
-  function renderCCTxs(){
-    const ccTxs = JSON.parse(localStorage.getItem(KEY.TX_CC) || '[]');
-    txListCC.innerHTML = '';
-    ccTxs.slice(0,200).forEach(tx=>{
-      const d = new Date(tx.iso);
-      const node = document.createElement('div');
-      node.className = 'tx';
-      node.innerHTML = `
-        <div class="tx-left">
-          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
-          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• ' + escapeHtml(tx.note) : ''}</div>
-        </div>
-        <div style="text-align:right">
-          <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
-        </div>
-      `;
-      txListCC.appendChild(node);
-    });
   }
 
   function updateCurrentBalanceSmall(){
     const accounts = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
+    const a = fromAccount.value;
+    const bal = Number(accounts[a] || 0);
+    currentBalanceSmall.textContent = formatCurrency(bal);
+  }
+
+  function handleSend(){
+    sendMessage.style.color = '#fca5a5';
+    sendMessage.textContent = '';
+    const amt = Number(amountI.value);
+    if (!recName.value.trim()) return sendMessage.textContent = 'Enter recipient name';
+    if (!amt || isNaN(amt) || amt <= 0) return sendMessage.textContent = 'Enter valid amount';
+
+    const accs = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
     const from = fromAccount.value;
-    const current = Number(accounts[from] || 0);
-    currentBalanceSmall.textContent = formatCurrency(current);
+    const cur = Number(accs[from] || 0);
+    if (amt > cur) return sendMessage.textContent = 'Insufficient funds';
+
+    accs[from] = Number((cur - amt).toFixed(2));
+    localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
+
+    const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
+    accTxs.unshift({
+      id:'wire_'+Date.now(),
+      account:from,
+      merchant:'Wire to '+recName.value,
+      amount:amt,
+      iso:new Date().toISOString(),
+      note:`Acct ${acctNo.value || 'n/a'} • ${bankName.value || 'Bank'}`
+    });
+    localStorage.setItem(KEY.TX_ACCOUNTS, JSON.stringify(accTxs.slice(0,500)));
+
+    renderMain();
+    sendMessage.style.color = '#9cf7b9';
+    sendMessage.textContent = 'Wire sent (demo).';
+    setTimeout(()=> sendForm.style.display='none', 1000);
+  }
+
+  function renderMain(){
+    const accs = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
+    const biz = Number(accs.business || 0);
+    const per = Number(accs.personal || 0);
+    const total = biz + per;
+
+    balBusiness.textContent = formatCurrency(biz);
+    balPersonal.textContent = formatCurrency(per);
+    bankTotal.textContent = formatCurrency(total);
+
+    const cc = JSON.parse(localStorage.getItem(KEY.CC) || '{}');
+    const owed = Number(cc.owed || 0);
+    ccTotalOwed.textContent = formatCurrency(owed);
+    ccOwedInline.textContent = formatCurrency(owed);
+  }
+
+  function openAccountDetail(which){
+    currentDetailAccount = which;
+    const accs = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
+    const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
+    const bal = Number(accs[which] || 0);
+
+    accDetailName.textContent = which === 'business' ? 'Master Lighting Productions Inc.' : 'Menachem Boaron';
+    accDetailMask.textContent = which === 'business' ? 'x•••4821' : 'x•••9374';
+    accDetailBalance.textContent = formatCurrency(bal);
+
+    accDetailTx.innerHTML = '';
+    accTxs.filter(t=>t.account===which).slice(0,200).forEach(tx=>{
+      const d = new Date(tx.iso);
+      const row = document.createElement('div');
+      row.className = 'tx';
+      row.innerHTML = `
+        <div class="tx-left">
+          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
+          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• '+escapeHtml(tx.note):''}</div>
+        </div>
+        <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
+      `;
+      accDetailTx.appendChild(row);
+    });
+
+    mainScreen.style.display = 'none';
+    accountScreen.style.display = 'flex';
+  }
+
+  function openCardDetail(){
+    const cc = JSON.parse(localStorage.getItem(KEY.CC) || '{}');
+    const owed = Number(cc.owed || 0);
+    const limit = Number(cc.limit || 0);
+    const avail = limit - owed;
+
+    ccOwed.textContent = formatCurrency(owed);
+    ccLimit.textContent = formatCurrency(limit);
+    ccAvail.textContent = formatCurrency(avail);
+
+    const ccTxs = JSON.parse(localStorage.getItem(KEY.TX_CC) || '[]');
+    txListCC.innerHTML = '';
+    ccTxs.slice(0,200).forEach(tx=>{
+      const d = new Date(tx.iso);
+      const row = document.createElement('div');
+      row.className = 'tx';
+      row.innerHTML = `
+        <div class="tx-left">
+          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
+          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• '+escapeHtml(tx.note):''}</div>
+        </div>
+        <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
+      `;
+      txListCC.appendChild(row);
+    });
+
+    mainScreen.style.display = 'none';
+    cardScreen.style.display = 'flex';
   }
 
   function generateAccountTXs(){
@@ -610,7 +767,6 @@
     const travel = ["Delta Airlines","El Al Israel","Four Seasons","Ritz Carlton","Uber Black"];
     const txs = [];
     const now = Date.now();
-
     let i = 0;
     luxury.forEach(m=>{
       txs.push({
