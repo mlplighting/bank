@@ -12,6 +12,8 @@
     --muted:#8793a3;
     --gold:#d4af37;
     --white:#ffffff;
+    --danger:#ffb4b4;
+    --success:#7ef7b1;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
   }
   html,body{
@@ -28,9 +30,19 @@
     display:flex;
     flex-direction:column;
     box-shadow:0 0 40px rgba(0,0,0,.6);
+    position:relative;
   }
-  header{
+
+  /* MAIN HEADER */
+  .main-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
     padding:12px 12px 4px;
+  }
+  .header-left{
+    flex:1;
   }
   .app-title{
     font-size:18px;
@@ -60,9 +72,13 @@
     align-items:center;
     justify-content:center;
   }
-  .top-btn small{
-    font-size:10px;
-    color:rgba(255,255,255,0.35);
+  .logout-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
   }
 
   .section-head{
@@ -79,7 +95,6 @@
     font-size:12px;
     color:var(--muted);
   }
-
   .account-list,
   .card-list{
     margin:0 12px;
@@ -116,10 +131,7 @@
     color:var(--gold);
   }
 
-  main{
-    flex:1;
-    overflow:auto;
-  }
+  main{flex:1;overflow:auto;}
 
   .send-form{
     padding:12px;
@@ -164,17 +176,6 @@
     font-size:12px;
     color:var(--muted);
   }
-  .logout-btn{
-    position:absolute;
-    top:10px;
-    right:10px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.15);
-    padding:6px 10px;
-    border-radius:8px;
-    font-size:12px;
-    cursor:pointer;
-  }
 
   .login-screen{
     position:fixed;
@@ -217,9 +218,7 @@
     color:#fff;
     cursor:pointer;
   }
-  .screen-title{
-    font-weight:700;
-  }
+  .screen-title{font-weight:700}
   .detail-body{
     flex:1;
     overflow:auto;
@@ -240,6 +239,15 @@
     margin-bottom:10px;
   }
 
+  /* deposit screen */
+  .maintenance-box{
+    margin:18px 12px 0;
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.03);
+    border-radius:12px;
+    padding:14px;
+  }
+
   @media (max-width:420px){
     .app{height:100vh}
   }
@@ -250,19 +258,21 @@
 
   <!-- MAIN SCREEN -->
   <div id="mainScreen" class="screen">
-    <button id="logoutBtn" class="logout-btn">Logout</button>
-    <header>
-      <div class="app-title">Signature Capital</div>
-      <div class="app-sub" id="welcomeLine">Welcome, Master Lighting Productions</div>
-      <div class="top-actions">
-        <button class="top-btn" id="depositBtn">📷 Deposit</button>
-        <button class="top-btn" id="transferBtn">Transfer</button>
-        <button class="top-btn" id="payCardBtn">Pay card</button>
+    <header class="main-header">
+      <div class="header-left">
+        <div class="app-title">Signature Capital</div>
+        <div class="app-sub" id="welcomeLine">Welcome, Master Lighting Productions</div>
+        <div class="top-actions">
+          <button class="top-btn" id="depositBtn">📷 Deposit</button>
+          <button class="top-btn" id="transferBtn">Transfer</button>
+          <button class="top-btn" id="payCardBtn">Pay card</button>
+        </div>
       </div>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
     </header>
 
     <main>
-      <!-- SEND FORM (global) -->
+      <!-- SEND FORM -->
       <div class="send-form" id="sendForm">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="font-weight:700">Wire / Transfer</div>
@@ -274,6 +284,15 @@
           <select id="fromAccount">
             <option value="business">Master Lighting Productions Inc.</option>
             <option value="personal">Menachem Boaron</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="app-sub">Send to</label>
+          <select id="toAccount">
+            <option value="manual">New recipient (enter details)</option>
+            <option value="business">Master Lighting Productions Inc. (internal)</option>
+            <option value="personal">Menachem Boaron (internal)</option>
           </select>
         </div>
 
@@ -347,6 +366,7 @@
           <div class="item-amt" id="ccOwedInline">$0.00</div>
         </div>
       </div>
+
     </main>
 
     <footer>Signature Capital</footer>
@@ -360,8 +380,9 @@
         <div class="screen-title" id="accDetailName">Account</div>
         <div class="app-sub" id="accDetailMask">x•••</div>
       </div>
-      <div style="margin-left:auto">
+      <div style="margin-left:auto;display:flex;gap:6px">
         <button class="primary" id="accDetailTransferBtn">Transfer</button>
+        <button class="logout-btn" id="logoutBtnAcc">Logout</button>
       </div>
     </div>
     <div class="detail-body">
@@ -380,8 +401,9 @@
         <div class="screen-title">Business Solutions Credit Card</div>
         <div class="app-sub">x•••7712</div>
       </div>
-      <div style="margin-left:auto">
+      <div style="margin-left:auto;display:flex;gap:6px">
         <button class="primary" id="cardPayBtn">Pay card</button>
+        <button class="logout-btn" id="logoutBtnCard">Logout</button>
       </div>
     </div>
     <div class="detail-body">
@@ -393,6 +415,26 @@
       </div>
       <div class="section-title" style="margin-bottom:4px">Transactions</div>
       <div id="txListCC" class="transactions"></div>
+    </div>
+  </div>
+
+  <!-- DEPOSIT (MAINTENANCE) SCREEN -->
+  <div id="depositScreen" class="screen" style="display:none">
+    <div class="screen-header">
+      <button class="back-btn" id="backFromDeposit">&lt;</button>
+      <div>
+        <div class="screen-title">Mobile deposit</div>
+        <div class="app-sub">Check capture</div>
+      </div>
+      <div style="margin-left:auto">
+        <button class="logout-btn" id="logoutBtnDep">Logout</button>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="maintenance-box">
+        <div class="section-title" style="margin-bottom:4px">Temporarily unavailable</div>
+        <div class="app-sub">We are doing a scheduled maintenance on deposits. Please try again later.</div>
+      </div>
     </div>
   </div>
 
@@ -412,16 +454,17 @@
     limit: 250000
   };
   const KEY = {
-    AUTH: 'sigcap_demo_auth_v6',
-    ACCOUNTS: 'sigcap_demo_accounts_v6',
-    CC: 'sigcap_demo_cc_v6',
-    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v6',
-    TX_CC: 'sigcap_demo_tx_cc_v6'
+    AUTH: 'sigcap_demo_auth_v7',
+    ACCOUNTS: 'sigcap_demo_accounts_v7',
+    CC: 'sigcap_demo_cc_v7',
+    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v7',
+    TX_CC: 'sigcap_demo_tx_cc_v7'
   };
 
   const mainScreen = $('mainScreen');
   const accountScreen = $('accountScreen');
   const cardScreen = $('cardScreen');
+  const depositScreen = $('depositScreen');
 
   const balBusiness = $('balBusiness');
   const balPersonal = $('balPersonal');
@@ -431,6 +474,7 @@
 
   const sendForm = $('sendForm');
   const fromAccount = $('fromAccount');
+  const toAccount = $('toAccount');
   const amountI = $('amount');
   const recName = $('recName');
   const routing = $('routing');
@@ -457,8 +501,14 @@
   const cancelSend = $('cancelSend');
 
   const logoutBtn = $('logoutBtn');
+  const logoutBtnAcc = $('logoutBtnAcc');
+  const logoutBtnCard = $('logoutBtnCard');
+  const logoutBtnDep = $('logoutBtnDep');
+
   const backFromAccount = $('backFromAccount');
   const backFromCard = $('backFromCard');
+  const backFromDeposit = $('backFromDeposit');
+
   const accDetailTransferBtn = $('accDetailTransferBtn');
   const cardPayBtn = $('cardPayBtn');
 
@@ -533,36 +583,52 @@
     $('cardBusinessRow').addEventListener('click', ()=> openCardDetail());
 
     transferBtn.addEventListener('click', toggleSendForm);
-    payCardBtn.addEventListener('click', ()=> {
-      toggleSendForm();
+    payCardBtn.addEventListener('click', ()=>{
+      toggleSendForm(true);
       fromAccount.value = 'business';
-      sendMessage.textContent = 'Tip: pay the credit card by sending to card.';
+      toAccount.value = 'manual';
+      sendMessage.textContent = 'Tip: send a payment to the credit card (demo).';
       sendMessage.style.color = '#fca5a5';
+      updateCurrentBalanceSmall();
     });
-    depositBtn.addEventListener('click', ()=> alert('Demo: mobile check deposit not enabled.'));
+    depositBtn.addEventListener('click', ()=>{
+      mainScreen.style.display = 'none';
+      depositScreen.style.display = 'flex';
+    });
 
-    fromAccount.addEventListener('change', updateCurrentBalanceSmall);
+    fromAccount.addEventListener('change', ()=> {
+      updateCurrentBalanceSmall();
+      autoFillRecipient();
+    });
+    toAccount.addEventListener('change', autoFillRecipient);
     cancelSend.addEventListener('click', ()=> sendForm.style.display = 'none');
 
     confirmSend.addEventListener('click', handleSend);
 
-    logoutBtn.addEventListener('click', ()=>{
-      localStorage.removeItem(KEY.AUTH);
-      location.reload();
+    [logoutBtn, logoutBtnAcc, logoutBtnCard, logoutBtnDep].forEach(btn=>{
+      if (!btn) return;
+      btn.addEventListener('click', ()=>{
+        localStorage.removeItem(KEY.AUTH);
+        location.reload();
+      });
     });
 
-    backFromAccount.addEventListener('click', ()=> {
+    backFromAccount.addEventListener('click', ()=>{
       accountScreen.style.display = 'none';
       mainScreen.style.display = 'flex';
     });
-    backFromCard.addEventListener('click', ()=> {
+    backFromCard.addEventListener('click', ()=>{
       cardScreen.style.display = 'none';
+      mainScreen.style.display = 'flex';
+    });
+    backFromDeposit.addEventListener('click', ()=>{
+      depositScreen.style.display = 'none';
       mainScreen.style.display = 'flex';
     });
 
     accDetailTransferBtn.addEventListener('click', ()=>{
-      mainScreen.style.display = 'flex';
       accountScreen.style.display = 'none';
+      mainScreen.style.display = 'flex';
       fromAccount.value = currentDetailAccount || 'business';
       toggleSendForm(true);
     });
@@ -572,7 +638,7 @@
       mainScreen.style.display = 'flex';
       fromAccount.value = 'business';
       toggleSendForm(true);
-      sendMessage.textContent = 'Paying card from business account (demo).';
+      sendMessage.textContent = 'Payment to credit card from business (demo).';
       sendMessage.style.color = '#fca5a5';
     });
   }
@@ -587,6 +653,26 @@
     updateCurrentBalanceSmall();
   }
 
+  function autoFillRecipient(){
+    const toVal = toAccount.value;
+    if (toVal === 'business'){
+      recName.value = 'Master Lighting Productions Inc.';
+      routing.value = '026009593';
+      acctNo.value = '00004821';
+      bankName.value = 'Signature Capital Bank';
+    } else if (toVal === 'personal'){
+      recName.value = 'Menachem Boaron';
+      routing.value = '026009594';
+      acctNo.value = '00009374';
+      bankName.value = 'Signature Capital Bank';
+    } else {
+      recName.value = '';
+      routing.value = '';
+      acctNo.value = '';
+      bankName.value = '';
+    }
+  }
+
   function updateCurrentBalanceSmall(){
     const accounts = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
     const a = fromAccount.value;
@@ -598,7 +684,6 @@
     sendMessage.style.color = '#fca5a5';
     sendMessage.textContent = '';
     const amt = Number(amountI.value);
-    if (!recName.value.trim()) return sendMessage.textContent = 'Enter recipient name';
     if (!amt || isNaN(amt) || amt <= 0) return sendMessage.textContent = 'Enter valid amount';
 
     const accs = JSON.parse(localStorage.getItem(KEY.ACCOUNTS) || '{}');
@@ -606,24 +691,69 @@
     const cur = Number(accs[from] || 0);
     if (amt > cur) return sendMessage.textContent = 'Insufficient funds';
 
-    accs[from] = Number((cur - amt).toFixed(2));
-    localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
-
+    const toVal = toAccount.value;
     const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
-    accTxs.unshift({
-      id:'wire_'+Date.now(),
-      account:from,
-      merchant:'Wire to '+recName.value,
-      amount:amt,
-      iso:new Date().toISOString(),
-      note:`Acct ${acctNo.value || 'n/a'} • ${bankName.value || 'Bank'}`
-    });
-    localStorage.setItem(KEY.TX_ACCOUNTS, JSON.stringify(accTxs.slice(0,500)));
 
-    renderMain();
-    sendMessage.style.color = '#9cf7b9';
-    sendMessage.textContent = 'Wire sent (demo).';
-    setTimeout(()=> sendForm.style.display='none', 1000);
+    // subtract from source
+    accs[from] = Number((cur - amt).toFixed(2));
+
+    if (toVal === 'business' || toVal === 'personal'){
+      // internal transfer
+      if (toVal === from){
+        sendMessage.textContent = 'Cannot transfer to same account';
+        return;
+      }
+      const targetBal = Number(accs[toVal] || 0);
+      accs[toVal] = Number((targetBal + amt).toFixed(2));
+      localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
+
+      // outgoing tx for source
+      accTxs.unshift({
+        id: 'int_out_' + Date.now(),
+        account: from,
+        merchant: toVal === 'business' ? 'Transfer to Master Lighting Productions Inc.' : 'Transfer to Menachem Boaron',
+        amount: amt,
+        iso: new Date().toISOString(),
+        dir: 'out',
+        note: ''
+      });
+
+      // incoming tx for target
+      accTxs.unshift({
+        id: 'int_in_' + Date.now(),
+        account: toVal,
+        merchant: from === 'business' ? 'Transfer from Master Lighting Productions Inc.' : 'Transfer from Menachem Boaron',
+        amount: amt,
+        iso: new Date().toISOString(),
+        dir: 'in',
+        note: ''
+      });
+
+      localStorage.setItem(KEY.TX_ACCOUNTS, JSON.stringify(accTxs.slice(0,500)));
+      renderMain();
+      sendMessage.style.color = '#9cf7b9';
+      sendMessage.textContent = 'Transfer completed.';
+      setTimeout(()=> sendForm.style.display='none', 900);
+      return;
+    } else {
+      // external wire
+      accs[from] = Number((cur - amt).toFixed(2));
+      localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
+      accTxs.unshift({
+        id: 'wire_' + Date.now(),
+        account: from,
+        merchant: 'Wire to ' + (recName.value || 'Recipient'),
+        amount: amt,
+        iso: new Date().toISOString(),
+        dir: 'out',
+        note: (acctNo.value ? 'Acct ' + acctNo.value : '') + (bankName.value ? ' • ' + bankName.value : '')
+      });
+      localStorage.setItem(KEY.TX_ACCOUNTS, JSON.stringify(accTxs.slice(0,500)));
+      renderMain();
+      sendMessage.style.color = '#9cf7b9';
+      sendMessage.textContent = 'Wire sent.';
+      setTimeout(()=> sendForm.style.display='none', 900);
+    }
   }
 
   function renderMain(){
@@ -655,14 +785,17 @@
     accDetailTx.innerHTML = '';
     accTxs.filter(t=>t.account===which).slice(0,200).forEach(tx=>{
       const d = new Date(tx.iso);
+      const isIn = tx.dir === 'in';
       const row = document.createElement('div');
       row.className = 'tx';
       row.innerHTML = `
         <div class="tx-left">
           <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
-          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• '+escapeHtml(tx.note):''}</div>
+          <div class="tx-details">${d.toLocaleDateString()}${tx.note ? ' • '+escapeHtml(tx.note):''}</div>
         </div>
-        <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
+        <div class="tx-amount" style="color:${isIn ? '#7ef7b1' : '#ffb4b4'}">
+          ${isIn ? '+' : '-'}${formatCurrency(tx.amount).replace('$','')}
+        </div>
       `;
       accDetailTx.appendChild(row);
     });
@@ -685,14 +818,17 @@
     txListCC.innerHTML = '';
     ccTxs.slice(0,200).forEach(tx=>{
       const d = new Date(tx.iso);
+      const isPayment = tx.dir === 'in';
       const row = document.createElement('div');
       row.className = 'tx';
       row.innerHTML = `
         <div class="tx-left">
           <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
-          <div class="tx-details">${d.toLocaleDateString()} ${tx.note ? '• '+escapeHtml(tx.note):''}</div>
+          <div class="tx-details">${d.toLocaleDateString()}${tx.note ? ' • '+escapeHtml(tx.note):''}</div>
         </div>
-        <div class="tx-amount" style="color:#ffb4b4">-${formatCurrency(tx.amount).replace('$','')}</div>
+        <div class="tx-amount" style="color:${isPayment ? '#7ef7b1' : '#ffb4b4'}">
+          ${isPayment ? '+' : '-'}${formatCurrency(tx.amount).replace('$','')}
+        </div>
       `;
       txListCC.appendChild(row);
     });
@@ -701,53 +837,100 @@
     cardScreen.style.display = 'flex';
   }
 
+  /* GENERATORS */
   function generateAccountTXs(){
     const list = [];
     const now = Date.now();
-    const businessVendors = [
-      "MLP Warehouse Rent",
-      "Rigging Supplier NY",
-      "Lighting Vendor Tel Aviv",
-      "Truss & Stage Rentals",
-      "PRG Equipment",
-      "Video Wall Panels",
-      "LED Fixture Purchase",
-      "Truck Rental & Fuel",
-      "Show Crew Payroll",
-      "Event Insurance"
+
+    const businessPayees = [
+      "Robe Lighting US",
+      "Chauvet Professional",
+      "PRG New York",
+      "4Wall Entertainment",
+      "Christie Lites NYC",
+      "AV Staging & Rigging",
+      "Delta Freight Logistics",
+      "NYC Trucking Co.",
+      "Con Edison",
+      "Chubb Insurance"
     ];
-    const personalStuff = [
-      "Transfer to Credit Card",
-      "Gym Membership",
-      "Amazon Order",
-      "Uber NYC",
-      "Grocery Market",
-      "Child Activity Payment"
+    const businessIncoming = [
+      "Wire from Client - Cipriani Event",
+      "Deposit - Hamptons Production",
+      "ACH Credit - Chabad of the Hamptons",
+      "Wire from Client - Wedding",
+      "Transfer from Personal"
     ];
-    for (let i=0;i<40;i++){
-      const isBusiness = i % 2 === 0;
-      if (isBusiness){
-        const m = businessVendors[Math.floor(Math.random()*businessVendors.length)];
+
+    const personalOutgoing = [
+      {m:"Chelsea Piers Fitness", amt:350.00},
+      {m:"Trader Joe's", amt:143.71},
+      {m:"Whole Foods Market", amt:218.34},
+      {m:"Apple Services", amt:49.99},
+      {m:"Payment to Credit Card", amt:1200.00},
+      {m:"Noam Activities", amt:85.00}
+    ];
+    const personalIncoming = [
+      "Transfer from Master Lighting Productions Inc.",
+      "Refund - Online Purchase"
+    ];
+
+    // business
+    for (let i=0;i<35;i++){
+      const isIncoming = i % 5 === 0;
+      if (isIncoming){
+        const m = businessIncoming[Math.floor(Math.random()*businessIncoming.length)];
         list.push({
-          id: 'acc_biz_'+i,
-          account: 'business',
-          merchant: m,
-          amount: Number((500 + Math.random()*15000).toFixed(2)),
-          iso: new Date(now - i*60*60*1000).toISOString(),
-          note: 'Invoice ' + (1000+i)
+          id:'biz_in_'+i,
+          account:'business',
+          merchant:m,
+          amount:Number((5000 + Math.random()*75000).toFixed(2)),
+          iso:new Date(now - i*45*60*1000).toISOString(),
+          dir:'in',
+          note:''
         });
       } else {
-        const m = personalStuff[Math.floor(Math.random()*personalStuff.length)];
+        const m = businessPayees[Math.floor(Math.random()*businessPayees.length)];
         list.push({
-          id: 'acc_per_'+i,
-          account: 'personal',
-          merchant: m,
-          amount: Number((50 + Math.random()*3000).toFixed(2)),
-          iso: new Date(now - i*90*60*1000).toISOString(),
-          note: ''
+          id:'biz_out_'+i,
+          account:'business',
+          merchant:m,
+          amount:Number((600 + Math.random()*18000).toFixed(2)),
+          iso:new Date(now - i*60*60*1000).toISOString(),
+          dir:'out',
+          note:''
         });
       }
     }
+
+    // personal
+    for (let j=0;j<25;j++){
+      const isIncoming = j % 6 === 0;
+      if (isIncoming){
+        const m = personalIncoming[Math.floor(Math.random()*personalIncoming.length)];
+        list.push({
+          id:'per_in_'+j,
+          account:'personal',
+          merchant:m,
+          amount:Number((300 + Math.random()*8000).toFixed(2)),
+          iso:new Date(now - j*90*60*1000).toISOString(),
+          dir:'in',
+          note:''
+        });
+      } else {
+        const t = personalOutgoing[Math.floor(Math.random()*personalOutgoing.length)];
+        list.push({
+          id:'per_out_'+j,
+          account:'personal',
+          merchant:t.m,
+          amount:t.amt ? t.amt : Number((40 + Math.random()*400).toFixed(2)),
+          iso:new Date(now - j*95*60*1000).toISOString(),
+          dir:'out',
+          note:''
+        });
+      }
+    }
+
     list.sort((a,b)=> new Date(b.iso) - new Date(a.iso));
     return list;
   }
@@ -758,48 +941,69 @@
       "Prada Soho",
       "Gucci Madison",
       "Dior Boutique",
-      "Bottega Veneta",
-      "Rolex Authorized",
       "Cartier NYC",
       "Fendi Boutique"
     ];
-    const restaurants = ["Nobu","Carbone","Le Bernardin","The Modern","Cipriani Downtown","Casa Cipriani"];
-    const travel = ["Delta Airlines","El Al Israel","Four Seasons","Ritz Carlton","Uber Black"];
+    const dining = ["Nobu", "Carbone", "Cipriani Downtown", "The Modern", "Pastis", "Casa Cipriani"];
+    const travel = ["Delta Airlines", "El Al Israel", "Four Seasons", "Ritz Carlton", "Uber", "Uber Black", "Lyft", "Doordash"];
     const txs = [];
     const now = Date.now();
     let i = 0;
+
     luxury.forEach(m=>{
       txs.push({
-        id: 'cc_lux_'+i,
-        merchant: m,
-        amount: Number((4000 + Math.random()*10000).toFixed(2)),
-        iso: new Date(now - i*45*60*1000).toISOString(),
-        note: 'CC Purchase'
+        id:'cc_lux_'+i,
+        merchant:m,
+        amount:Number((4000 + Math.random()*9000).toFixed(2)),
+        iso:new Date(now - i*40*60*1000).toISOString(),
+        dir:'out',
+        note:'CC Purchase'
       });
       i++;
     });
-    for (let j=0;j<40;j++){
+
+    for (let j=0;j<45;j++){
       const pick = Math.random();
       let merchant, amount;
-      if (pick < 0.33){
-        merchant = restaurants[Math.floor(Math.random()*restaurants.length)];
+      if (pick < 0.3){
+        merchant = dining[Math.floor(Math.random()*dining.length)];
         amount = Number((150 + Math.random()*600).toFixed(2));
-      } else if (pick < 0.66){
+      } else if (pick < 0.7){
         merchant = travel[Math.floor(Math.random()*travel.length)];
-        amount = Number((200 + Math.random()*2500).toFixed(2));
+        amount = Number((25 + Math.random()*800).toFixed(2));
       } else {
         merchant = "Online Purchase";
-        amount = Number((50 + Math.random()*450).toFixed(2));
+        amount = Number((50 + Math.random()*400).toFixed(2));
       }
       txs.push({
-        id: 'cc_'+i,
+        id:'cc_'+i,
         merchant,
         amount,
-        iso: new Date(now - i*70*60*1000).toISOString(),
-        note: ''
+        iso:new Date(now - i*70*60*1000).toISOString(),
+        dir:'out',
+        note:''
       });
       i++;
     }
+
+    // add some payments
+    txs.unshift({
+      id:'cc_pay_1',
+      merchant:'Payment - Master Lighting Productions Inc.',
+      amount:15000.00,
+      iso:new Date(now - 20*60*1000).toISOString(),
+      dir:'in',
+      note:''
+    });
+    txs.unshift({
+      id:'cc_refund_1',
+      merchant:'Refund - Dior Boutique',
+      amount:2100.00,
+      iso:new Date(now - 10*60*1000).toISOString(),
+      dir:'in',
+      note:''
+    });
+
     txs.sort((a,b)=> new Date(b.iso) - new Date(a.iso));
     return txs;
   }
