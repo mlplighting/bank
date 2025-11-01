@@ -33,19 +33,30 @@
     position:relative;
   }
 
-  /* MAIN HEADER */
+  /* MAIN (no scroll) */
+  #mainScreen{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+  }
+
   .main-header{
     display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:10px;
-    padding:12px 12px 4px;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    padding:14px 12px 6px;
+    text-align:center;
+    position:relative;
   }
   .header-left{
-    flex:1;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
   }
   .app-title{
-    font-size:18px;
+    font-size:20px;
     font-weight:700;
   }
   .app-sub{
@@ -57,6 +68,8 @@
     display:flex;
     gap:8px;
     margin-top:10px;
+    width:100%;
+    max-width:340px;
   }
   .top-btn{
     flex:1;
@@ -79,28 +92,92 @@
     border-radius:8px;
     font-size:12px;
     cursor:pointer;
+    position:absolute;
+    top:10px;
+    right:12px;
   }
 
+  main{
+    flex:1;
+    overflow:hidden; /* no scroll on landing */
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+
+  .center-wrap{
+    width:100%;
+    max-width:360px;
+    margin:0 auto;
+  }
+
+  .send-form{
+    padding:12px;
+    background:linear-gradient(180deg,#071827,#06141c);
+    border-radius:12px;
+    margin:12px auto 0;
+    display:none;
+    flex-direction:column;
+    gap:8px;
+    max-width:360px;
+    width:100%;
+  }
+  .field{display:flex;flex-direction:column;gap:6px}
+  input[type="text"],input[type="number"],input[type="password"],select{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:transparent;
+    color:var(--white);
+    outline:none;
+  }
+  .row{display:flex;gap:8px}
+  button.primary{
+    background:var(--accent);
+    border:none;
+    padding:10px 12px;
+    border-radius:10px;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+  }
+  button.ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.08);
+    padding:10px 12px;
+    border-radius:10px;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  /* sections */
   .section-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin:14px 12px 4px;
+    margin:14px auto 6px;
+    max-width:360px;
+    width:100%;
   }
   .section-title{
     font-weight:700;
-    font-size:14px;
+    font-size:15px;
   }
   .section-total{
-    font-size:12px;
-    color:var(--muted);
+    font-size:15px;
+    font-weight:700;
+    color:var(--white);
   }
+
   .account-list,
   .card-list{
-    margin:0 12px;
+    margin:0 auto;
     display:flex;
     flex-direction:column;
     gap:8px;
+    width:100%;
+    max-width:360px;
   }
   .list-item{
     background:rgba(255,255,255,0.02);
@@ -131,45 +208,6 @@
     color:var(--gold);
   }
 
-  main{flex:1;overflow:auto;}
-
-  .send-form{
-    padding:12px;
-    background:linear-gradient(180deg,#071827,#06141c);
-    border-radius:12px;
-    margin:12px;
-    display:none;
-    flex-direction:column;
-    gap:8px;
-  }
-  .field{display:flex;flex-direction:column;gap:6px}
-  input[type="text"],input[type="number"],input[type="password"],select{
-    padding:10px;
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.06);
-    background:transparent;
-    color:var(--white);
-    outline:none;
-  }
-  .row{display:flex;gap:8px}
-  button.primary{
-    background:var(--accent);
-    border:none;
-    padding:10px 12px;
-    border-radius:10px;
-    color:#fff;
-    font-weight:600;
-    cursor:pointer;
-  }
-  button.ghost{
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.08);
-    padding:10px 12px;
-    border-radius:10px;
-    color:#fff;
-    font-weight:600;
-    cursor:pointer;
-  }
   footer{
     padding:8px;
     text-align:center;
@@ -196,7 +234,7 @@
     border:1px solid rgba(255,255,255,0.03);
   }
 
-  /* detail screens */
+  /* detail screens (scrollable) */
   .screen{
     height:100%;
     display:flex;
@@ -239,7 +277,6 @@
     margin-bottom:10px;
   }
 
-  /* deposit screen */
   .maintenance-box{
     margin:18px 12px 0;
     background:rgba(255,255,255,0.02);
@@ -454,11 +491,11 @@
     limit: 250000
   };
   const KEY = {
-    AUTH: 'sigcap_demo_auth_v7',
-    ACCOUNTS: 'sigcap_demo_accounts_v7',
-    CC: 'sigcap_demo_cc_v7',
-    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v7',
-    TX_CC: 'sigcap_demo_tx_cc_v7'
+    AUTH: 'sigcap_demo_auth_v8',
+    ACCOUNTS: 'sigcap_demo_accounts_v8',
+    CC: 'sigcap_demo_cc_v8',
+    TX_ACCOUNTS: 'sigcap_demo_tx_accounts_v8',
+    TX_CC: 'sigcap_demo_tx_cc_v8'
   };
 
   const mainScreen = $('mainScreen');
@@ -694,11 +731,9 @@
     const toVal = toAccount.value;
     const accTxs = JSON.parse(localStorage.getItem(KEY.TX_ACCOUNTS) || '[]');
 
-    // subtract from source
     accs[from] = Number((cur - amt).toFixed(2));
 
     if (toVal === 'business' || toVal === 'personal'){
-      // internal transfer
       if (toVal === from){
         sendMessage.textContent = 'Cannot transfer to same account';
         return;
@@ -707,7 +742,6 @@
       accs[toVal] = Number((targetBal + amt).toFixed(2));
       localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
 
-      // outgoing tx for source
       accTxs.unshift({
         id: 'int_out_' + Date.now(),
         account: from,
@@ -718,7 +752,6 @@
         note: ''
       });
 
-      // incoming tx for target
       accTxs.unshift({
         id: 'int_in_' + Date.now(),
         account: toVal,
@@ -736,7 +769,6 @@
       setTimeout(()=> sendForm.style.display='none', 900);
       return;
     } else {
-      // external wire
       accs[from] = Number((cur - amt).toFixed(2));
       localStorage.setItem(KEY.ACCOUNTS, JSON.stringify(accs));
       accTxs.unshift({
@@ -837,74 +869,82 @@
     cardScreen.style.display = 'flex';
   }
 
-  /* GENERATORS */
   function generateAccountTXs(){
     const list = [];
     const now = Date.now();
 
-    const businessPayees = [
-      "Robe Lighting US",
-      "Chauvet Professional",
-      "PRG New York",
-      "4Wall Entertainment",
-      "Christie Lites NYC",
-      "AV Staging & Rigging",
-      "Delta Freight Logistics",
-      "NYC Trucking Co.",
-      "Con Edison",
-      "Chubb Insurance"
+    const businessOutgoing = [
+      {m:"Robe Lighting US", min:18500, max:92000},
+      {m:"Chauvet Professional", min:8500, max:45000},
+      {m:"PRG New York", min:22000, max:155000},
+      {m:"4Wall Entertainment", min:18000, max:93000},
+      {m:"Solotech USA", min:16000, max:80000},
+      {m:"U-Haul Brooklyn", min:500, max:2200},
+      {m:"NYC Trucking Co.", min:950, max:4800},
+      {m:"Chubb Insurance", min:900, max:3800},
+      {m:"Con Edison", min:680, max:4200},
+      {m:"NY Stage & Rigging Supply", min:1200, max:9800}
     ];
+
     const businessIncoming = [
-      "Wire from Client - Cipriani Event",
-      "Deposit - Hamptons Production",
-      "ACH Credit - Chabad of the Hamptons",
-      "Wire from Client - Wedding",
-      "Transfer from Personal"
+      "Cipriani Events LLC",
+      "Hamptons Event Group",
+      "Greenberg Family Productions",
+      "Park Avenue Wedding Co.",
+      "Soho Gala Management",
+      "Temple Beth Shalom",
+      "Shulman & Co. Event Dept.",
+      "Upper East Productions"
     ];
 
     const personalOutgoing = [
       {m:"Chelsea Piers Fitness", amt:350.00},
-      {m:"Trader Joe's", amt:143.71},
-      {m:"Whole Foods Market", amt:218.34},
+      {m:"Trader Joe's", min:90, max:240},
+      {m:"Whole Foods Market", min:140, max:310},
+      {m:"Payment to Credit Card", min:800, max:1500},
+      {m:"Noam Activities", min:75, max:120},
       {m:"Apple Services", amt:49.99},
-      {m:"Payment to Credit Card", amt:1200.00},
-      {m:"Noam Activities", amt:85.00}
-    ];
-    const personalIncoming = [
-      "Transfer from Master Lighting Productions Inc.",
-      "Refund - Online Purchase"
+      {m:"Transfer to Business Card", min:300, max:900},
+      {m:"Sephora", min:120, max:460}
     ];
 
-    // business
-    for (let i=0;i<35;i++){
+    const personalIncoming = [
+      "Transfer from Master Lighting Productions Inc.",
+      "Refund - Online Purchase",
+      "Deposit from Client"
+    ];
+
+    // Business txs
+    for (let i=0;i<32;i++){
       const isIncoming = i % 5 === 0;
       if (isIncoming){
-        const m = businessIncoming[Math.floor(Math.random()*businessIncoming.length)];
+        const name = businessIncoming[Math.floor(Math.random()*businessIncoming.length)];
         list.push({
           id:'biz_in_'+i,
           account:'business',
-          merchant:m,
-          amount:Number((5000 + Math.random()*75000).toFixed(2)),
+          merchant:name,
+          amount:Number((6000 + Math.random()*90000).toFixed(2)),
           iso:new Date(now - i*45*60*1000).toISOString(),
           dir:'in',
           note:''
         });
       } else {
-        const m = businessPayees[Math.floor(Math.random()*businessPayees.length)];
+        const pick = businessOutgoing[Math.floor(Math.random()*businessOutgoing.length)];
+        const amount = Number((pick.min + Math.random()*(pick.max - pick.min)).toFixed(2));
         list.push({
           id:'biz_out_'+i,
           account:'business',
-          merchant:m,
-          amount:Number((600 + Math.random()*18000).toFixed(2)),
-          iso:new Date(now - i*60*60*1000).toISOString(),
+          merchant:pick.m,
+          amount,
+          iso:new Date(now - i*58*60*1000).toISOString(),
           dir:'out',
           note:''
         });
       }
     }
 
-    // personal
-    for (let j=0;j<25;j++){
+    // Personal txs
+    for (let j=0;j<22;j++){
       const isIncoming = j % 6 === 0;
       if (isIncoming){
         const m = personalIncoming[Math.floor(Math.random()*personalIncoming.length)];
@@ -912,19 +952,20 @@
           id:'per_in_'+j,
           account:'personal',
           merchant:m,
-          amount:Number((300 + Math.random()*8000).toFixed(2)),
-          iso:new Date(now - j*90*60*1000).toISOString(),
+          amount:Number((300 + Math.random()*5000).toFixed(2)),
+          iso:new Date(now - j*88*60*1000).toISOString(),
           dir:'in',
           note:''
         });
       } else {
-        const t = personalOutgoing[Math.floor(Math.random()*personalOutgoing.length)];
+        const p = personalOutgoing[Math.floor(Math.random()*personalOutgoing.length)];
+        let amt = p.amt !== undefined ? p.amt : Number((p.min + Math.random()*(p.max - p.min)).toFixed(2));
         list.push({
           id:'per_out_'+j,
           account:'personal',
-          merchant:t.m,
-          amount:t.amt ? t.amt : Number((40 + Math.random()*400).toFixed(2)),
-          iso:new Date(now - j*95*60*1000).toISOString(),
+          merchant:p.m,
+          amount:amt,
+          iso:new Date(now - j*90*60*1000).toISOString(),
           dir:'out',
           note:''
         });
@@ -944,8 +985,8 @@
       "Cartier NYC",
       "Fendi Boutique"
     ];
-    const dining = ["Nobu", "Carbone", "Cipriani Downtown", "The Modern", "Pastis", "Casa Cipriani"];
-    const travel = ["Delta Airlines", "El Al Israel", "Four Seasons", "Ritz Carlton", "Uber", "Uber Black", "Lyft", "Doordash"];
+    const dining = ["Nobu","Carbone","Cipriani Downtown","The Modern","Pastis","Casa Cipriani","L'Avenue at Saks"];
+    const travel = ["Delta Airlines","El Al Israel","Four Seasons","Ritz Carlton","Uber","Uber Black","Lyft","Doordash","JetBlue"];
     const txs = [];
     const now = Date.now();
     let i = 0;
@@ -986,7 +1027,7 @@
       i++;
     }
 
-    // add some payments
+    // payments & refunds
     txs.unshift({
       id:'cc_pay_1',
       merchant:'Payment - Master Lighting Productions Inc.',
