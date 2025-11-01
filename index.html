@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<title>Mock Bank (Phone)</title>
+<style>
+  :root{
+    --bg:#0f1720;
+    --card:#0b1220;
+    --accent:#0ea5a4;
+    --muted:#8793a3;
+    --gold:#d4af37;
+    --white:#ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%, #091827 100%);color:var(--white);}
+  .app{max-width:420px;margin:0 auto;height:100vh;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.6);}
+  header{padding:12px;display:flex;align-items:center;gap:12px;background:transparent;}
+  .logo{width:48px;height:48px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .logo img{max-width:100%;max-height:100%;display:block;}
+  .title{font-weight:600;font-size:16px;}
+  .balance-card{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));margin:12px;border-radius:12px;padding:14px;}
+  .balance-top{display:flex;justify-content:space-between;align-items:center;}
+  .balance-amount{font-size:24px;font-weight:700;color:var(--gold);}
+  .small{font-size:12px;color:var(--muted);}
+  .actions{display:flex;gap:8px;margin-top:12px;}
+  button{background:var(--accent);border:none;padding:10px 12px;border-radius:10px;color:white;font-weight:600;flex:1;font-size:14px}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  main{flex:1;overflow:auto;padding:12px;}
+  .transactions{display:flex;flex-direction:column;gap:8px;padding-bottom:24px;}
+  .tx{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;}
+  .tx-left{display:flex;flex-direction:column;gap:6px;}
+  .tx-merchant{font-weight:700}
+  .tx-details{font-size:12px;color:var(--muted)}
+  .tx-amount{font-weight:700}
+  .send-form{padding:12px;background:linear-gradient(180deg,#071827,#06141c);border-radius:12px;margin-top:12px;display:none;flex-direction:column;gap:8px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  input,select,textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white);outline:none}
+  .row{display:flex;gap:8px}
+  .login-screen{position:fixed;inset:0;background:linear-gradient(180deg, rgba(3,7,12,0.9), rgba(2,6,9,0.95));display:flex;align-items:center;justify-content:center;z-index:999;padding:20px;}
+  .login-box{max-width:400px;width:100%;background:var(--card);padding:20px;border-radius:12px}
+  .center{text-align:center}
+  .note{font-size:12px;color:var(--muted)}
+  .filesmall{font-size:12px;color:var(--muted);margin-top:6px}
+  footer{padding:8px;text-align:center;font-size:12px;color:var(--muted)}
+  @media (max-width:420px){
+    .app{height:100vh}
+    .title{font-size:14px}
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="logo" id="logoWrap"><span id="logoPlaceholder" style="font-weight:700">BK</span></div>
+    <div style="flex:1">
+      <div class="title">Mock Bank</div>
+      <div class="small" id="userEmail">user@mockbank.local</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+      <button id="uploadBtn" class="ghost" style="padding:6px 8px;font-size:12px">Upload Logo</button>
+      <input id="logoInput" type="file" accept="image/*" style="display:none">
+    </div>
+  </header>
+
+  <div class="balance-card" id="balanceCard">
+    <div class="balance-top">
+      <div>
+        <div class="small">Available balance</div>
+        <div class="balance-amount" id="balanceAmount">$12,000,000.00</div>
+      </div>
+      <div class="small">Acct •••• 1234</div>
+    </div>
+    <div class="actions">
+      <button id="sendBtn">Send / Transfer</button>
+      <button id="refreshBtn" class="ghost">Refresh tx</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="center small filesmall">Swipe to scroll. Transactions are mock data only.</div>
+
+    <div class="send-form" id="sendForm">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Wire Transfer</div>
+        <div class="small" id="currentBalanceSmall">$12,000,000.00</div>
+      </div>
+      <div class="field">
+        <label class="small">Recipient name</label>
+        <input id="recName" placeholder="Full name (e.g., John Doe)">
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1">
+          <label class="small">Routing / ABA</label>
+          <input id="routing" placeholder="9 digits">
+        </div>
+        <div class="field" style="flex:1">
+          <label class="small">Account #</label>
+          <input id="acctNo" placeholder="Account number">
+        </div>
+      </div>
+      <div class="field">
+        <label class="small">Bank name</label>
+        <input id="bankName" placeholder="Bank name">
+      </div>
+      <div class="field">
+        <label class="small">Amount (USD)</label>
+        <input id="amount" type="number" placeholder="100.00" min="0" step="0.01">
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button id="confirmSend">Confirm & Send</button>
+        <button id="cancelSend" class="ghost">Cancel</button>
+      </div>
+      <div id="sendMessage" class="small" style="color:#fca5a5"></div>
+    </div>
+
+    <div style="margin-top:12px;font-weight:700">Recent transactions</div>
+    <div class="transactions" id="txList"></div>
+  </main>
+
+  <footer>Demo app • Local only</footer>
+</div>
+
+<!-- Templates & scripts -->
+<script>
+(function(){
+  // Utilities
+  const $ = id => document.getElementById(id);
+  const currency = n => {
+    if (isNaN(n)) return "$0.00";
+    return "$" + Number(n).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+  };
+
+  // Initial state
+  const DEFAULT_BALANCE = 12000000.00;
+  const TRANSACTION_COUNT = 100;
+
+  // Data keys
+  const KEY_BAL = 'mockbank_balance_v1';
+  const KEY_TX = 'mockbank_txs_v1';
+  const KEY_LOGO = 'mockbank_logo_v1';
+  const KEY_AUTH = 'mockbank_auth_v1';
+
+  // Elements
+  const balanceAmount = $('balanceAmount');
+  const txList = $('txList');
+  const sendBtn = $('sendBtn');
+  const sendForm = $('sendForm');
+  const confirmSend = $('confirmSend');
+  const cancelSend = $('cancelSend');
+  const amountI = $('amount');
+  const recName = $('recName');
+  const routing = $('routing');
+  const acctNo = $('acctNo');
+  const bankName = $('bankName');
+  const currentBalanceSmall = $('currentBalanceSmall');
+  const sendMessage = $('sendMessage');
+  const uploadBtn = $('uploadBtn');
+  const logoInput = $('logoInput');
+  const logoWrap = $('logoWrap');
+  const logoPlaceholder = $('logoPlaceholder');
+  const refreshBtn = $('refreshBtn');
+
+  // Simple login (demo)
+  if (!localStorage.getItem(KEY_AUTH)){
+    // show simple login modal
+    showLogin();
+  }
+
+  function showLogin(){
+    const loginOverlay = document.createElement('div');
+    loginOverlay.className = 'login-screen';
+    loginOverlay.innerHTML = `
+      <div class="login-box">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:800;font-size:18px">Mock Bank Demo</div>
+          <div class="small">Phone view</div>
+        </div>
+        <div style="margin-top:12px" class="small">This is a local demo. Type any password to continue.</div>
+        <div style="margin-top:12px">
+          <input id="demoPass" placeholder="Enter password" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff">
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button id="loginBtn">Login</button>
+          <button id="guestBtn" class="ghost">Guest</button>
+        </div>
+        <div style="margin-top:10px" class="note">Logo upload and data persist locally in the browser.</div>
+      </div>
+    `;
+    document.body.appendChild(loginOverlay);
+    $('loginBtn').addEventListener('click',()=>{ localStorage.setItem(KEY_AUTH, '1'); loginOverlay.remove(); initApp(); });
+    $('guestBtn').addEventListener('click',()=>{ localStorage.setItem(KEY_AUTH, '1'); loginOverlay.remove(); initApp(); });
+    $('demoPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ $('loginBtn').click(); }});
+  }
+
+  function initApp(){
+    // load or init balance
+    if (!localStorage.getItem(KEY_BAL)){
+      localStorage.setItem(KEY_BAL, String(DEFAULT_BALANCE));
+    }
+    // load or generate transactions
+    if (!localStorage.getItem(KEY_TX)){
+      const txs = generateTransactions(TRANSACTION_COUNT, Number(localStorage.getItem(KEY_BAL)));
+      localStorage.setItem(KEY_TX, JSON.stringify(txs));
+    }
+    // load logo
+    const logo = localStorage.getItem(KEY_LOGO);
+    if (logo){
+      setLogo(logo);
+    }
+    render();
+  }
+
+  function generateTransactions(n, startingBalance){
+    const merchantsLux = ["Louis Vuitton","Prada","Gucci","Bottega Veneta","Dior","Balenciaga"];
+    const restaurants = ["Le Bernardin","Nobu","Carbone","The Modern","Daniel","Gramercy Tavern","Katz's Deli"];
+    const electronics = ["Apple Store","Best Buy","B&H Photo","Adorama","Samsung Experience"];
+    const misc = ["Uber","Airbnb","Amazon","Grocery Market","Gas Station","Netflix"];
+    const all = [...merchantsLux, ...restaurants, ...electronics, ...misc];
+    const txs = [];
+    let bal = startingBalance;
+    for (let i=0;i<n;i++){
+      const merchant = all[Math.floor(Math.random()*all.length)];
+      // random amounts biased by category
+      let amount;
+      if (merchantsLux.includes(merchant)) amount = randRange(700, 15000);
+      else if (restaurants.includes(merchant)) amount = randRange(30, 800);
+      else if (electronics.includes(merchant)) amount = randRange(50, 6000);
+      else amount = randRange(5, 500);
+      // random sign mostly debits, some credits
+      const isCredit = Math.random() < 0.05; // 5% credits/refunds
+      const signed = isCredit ? amount * -1 : amount; // credit reduces negative expense (adds to balance)
+      // date within last 120 days
+      const date = new Date(Date.now() - Math.floor(Math.random()*120*24*60*60*1000));
+      bal = Number((bal - signed).toFixed(2)); // apply so that balance could vary (not needed)
+      txs.push({
+        id: `tx_${Date.now()}_${i}_${Math.floor(Math.random()*9999)}`,
+        merchant,
+        amount: Number(amount.toFixed(2)),
+        type: isCredit ? 'credit' : 'debit',
+        iso: date.toISOString(),
+        note: isCredit ? 'Refund' : (Math.random() < 0.2 ? 'Online order' : '')
+      });
+    }
+    // sort newest first
+    txs.sort((a,b)=> new Date(b.iso) - new Date(a.iso));
+    return txs;
+  }
+
+  function randRange(min, max){
+    return Math.random()*(max-min)+min;
+  }
+
+  // Render UI
+  function render(){
+    const bal = Number(localStorage.getItem(KEY_BAL) || DEFAULT_BALANCE);
+    balanceAmount.textContent = currency(bal);
+    currentBalanceSmall.textContent = currency(bal);
+    renderTxs();
+  }
+
+  function renderTxs(){
+    const txs = JSON.parse(localStorage.getItem(KEY_TX) || '[]');
+    txList.innerHTML = '';
+    txs.slice(0,200).forEach(tx=>{
+      const d = new Date(tx.iso);
+      const el = document.createElement('div');
+      el.className = 'tx';
+      el.innerHTML = `
+        <div class="tx-left">
+          <div class="tx-merchant">${escapeHtml(tx.merchant)}</div>
+          <div class="tx-details">${d.toLocaleDateString()} • ${tx.note || ''}</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount" style="color:${tx.type==='debit'?'#ffb4b4':'#b8ffcf'}">${tx.type==='debit' ? '-' : '+'}${currency(tx.amount).replace('$','')}</div>
+        </div>
+      `;
+      txList.appendChild(el);
+    });
+  }
+
+  // Send flow
+  sendBtn.addEventListener('click', ()=> {
+    sendForm.style.display = sendForm.style.display === 'flex' ? 'none' : 'flex';
+    sendForm.style.flexDirection = 'column';
+    amountI.value = '';
+    recName.value = '';
+    routing.value = '';
+    acctNo.value = '';
+    bankName.value = '';
+    sendMessage.textContent = '';
+  });
+  cancelSend.addEventListener('click', ()=> sendBtn.click());
+
+  confirmSend.addEventListener('click', ()=>{
+    sendMessage.style.color = '#fca5a5';
+    sendMessage.textContent = '';
+    const amt = Number(amountI.value);
+    if (!recName.value.trim()) { sendMessage.textContent = 'Enter recipient name'; return; }
+    if (!routing.value.trim()) { sendMessage.textContent = 'Enter routing number'; return; }
+    if (!acctNo.value.trim()) { sendMessage.textContent = 'Enter account number'; return; }
+    if (!bankName.value.trim()) { sendMessage.textContent = 'Enter bank name'; return; }
+    if (!amt || isNaN(amt) || amt <= 0) { sendMessage.textContent = 'Enter valid amount'; return; }
+    // check balance
+    let bal = Number(localStorage.getItem(KEY_BAL) || 0);
+    if (amt > bal) { sendMessage.textContent = 'Insufficient funds'; return; }
+    // proceed: deduct and create tx
+    bal = Number((bal - amt).toFixed(2));
+    localStorage.setItem(KEY_BAL, String(bal));
+    const txs = JSON.parse(localStorage.getItem(KEY_TX) || '[]');
+    const now = new Date().toISOString();
+    txs.unshift({
+      id: 'wire_' + Date.now(),
+      merchant: `Wire to ${recName.value}`,
+      amount: Number(amt.toFixed(2)),
+      type: 'debit',
+      iso: now,
+      note: `Acct ${acctNo.value} • ${bankName.value}`
+    });
+    // store
+    localStorage.setItem(KEY_TX, JSON.stringify(txs.slice(0,500))); // keep up to 500
+    render();
+    sendMessage.style.color = '#9cf7b9';
+    sendMessage.textContent = 'Wire sent. Balance updated.';
+    // hide after short delay
+    setTimeout(()=>{ sendForm.style.display='none'; }, 900);
+  });
+
+  // upload logo
+  uploadBtn.addEventListener('click', ()=> logoInput.click());
+  logoInput.addEventListener('change', (e)=>{
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      localStorage.setItem(KEY_LOGO, ev.target.result);
+      setLogo(ev.target.result);
+    };
+    reader.readAsDataURL(f);
+  });
+
+  function setLogo(dataUrl){
+    logoWrap.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = dataUrl;
+    img.alt = 'logo';
+    logoWrap.appendChild(img);
+  }
+
+  refreshBtn.addEventListener('click', renderTxs);
+
+  // escape html for safety in merchant
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];}); }
+
+  // Init if already authed
+  if (localStorage.getItem(KEY_AUTH)) initApp();
+
+  // Expose some functions for debugging from console
+  window.mockBank = {
+    reset: ()=>{ localStorage.removeItem(KEY_BAL); localStorage.removeItem(KEY_TX); localStorage.removeItem(KEY_LOGO); localStorage.removeItem(KEY_AUTH); location.reload(); },
+    seedMore: (n=50) => { const txs = JSON.parse(localStorage.getItem(KEY_TX) || '[]'); localStorage.setItem(KEY_TX, JSON.stringify(generateTransactions(n, Number(localStorage.getItem(KEY_BAL))))); render(); }
+  };
+
+})();
+</script>
+</body>
+</html>
